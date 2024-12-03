@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добро пожаловать в TaskFlow</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        body {
+            background-color: #161A1D; /* Темно-серый фон с оттенком синего */
+            font-family: 'Century Gothic', sans-serif;
+            color: #D3D3D3; /* Светлый текст */
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            margin-top: 30px;
+            font-size: 2.5em;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #D3D3D3; /* Светлый текст */
+            text-align: center;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        h1 span.flow {
+            color: #A4161A; /* Красный контрастный акцент */
+        }
+
+        p {
+            font-size: 1.2em;
+            text-align: center;
+            margin-bottom: 10px;
+            color: #D3D3D3; /* Светлый текст */
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .button {
+            background-color: #161A1D; /* Фон кнопок совпадает с основным фоном */
+            color: #D3D3D3; /* Светлый текст */
+            padding: 15px 30px;
+            border: 2px solid #D3D3D3; /* Светлая граница */
+            border-radius: 30px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+            font-size: 1.1em;
+            width: 250px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .button:hover {
+            transform: translateY(-5px); /* Эффект движения */
+            border-color: #A4161A; /* Изменение цвета границы на контрастный красный */
+            color: #A4161A; /* Изменение цвета текста на контрастный красный */
+        }
+
+        .app-info {
+            font-size: 1.2em;
+            margin-bottom: 50px;
+            color: #D3D3D3; /* Светлый текст */
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-align: center;
+            animation: fadeIn 2.5s ease-in-out;
+        }
+
+        section p {
+            font-size: 1.2em;
+            color: #D3D3D3; /* Светлый текст */
+            max-width: 700px;
+            margin: 0 auto;
+            animation: fadeIn 3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Добро пожаловать в Task<span class="flow">Flow</span></h1>
+        <p>Управляйте своими задачами и повышайте продуктивность с лёгкостью.</p>
+    </header>
+
+    <div class="button-container">
+        <a href="{{ url_for('login') }}" class="button">Войти</a>
+        <a href="{{ url_for('register') }}" class="button">Зарегистрироваться</a>
+    </div>
+
+    <section>
+        <h2 class="app-info" style="color: #A4161A;">О приложении</h2>
+        <p>
+            Task<span style="color: #A4161A;">Flow</span> — это удобный инструмент для управления задачами, который поможет вам организовать свою работу.
+            Вы можете создавать, редактировать и удалять задачи, устанавливать сроки, а также общаться с коллегами.
+            Приложение также позволяет отслеживать вашу продуктивность и получать отчеты о выполненных задачах.
+        </p>
+    </section>
+</body>
+</html>

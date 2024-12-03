@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Создать проект</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Century Gothic', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #161A1D;
+            color: #D3D3D3;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 50px auto;
+            background-color: rgba(42, 47, 52, 1);
+            color: #d3d3d3; /* Светлый текст */
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2em;
+            font-family: 'Century Gothic', sans-serif;
+            font-weight: normal;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        input, textarea, button {
+            font-size: 1em;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #d3d3d3;
+            border-radius: 10px;
+        }
+
+        button {
+            background-color: #d3d3d3;
+            color: #161A1D;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s ease;
+            font-family: 'Century Gothic', sans-serif;
+            font-weight: normal;
+        }
+        label, input {
+        font-family: 'Century Gothic', sans-serif;
+        font-weight: normal;
+    }
+
+    input {
+    font-size: 1.2em;  /* Размер шрифта для input */
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid #d3d3d3;
+    background-color: rgba(42, 47, 52, 1);
+    color: #d3d3d3;  /* Светлый текст */
+    transition: background-color 0.3s ease, border 0.3s ease;
+    width: 95%;  /* Чтобы input занимал всю доступную ширину */
+}
+
+input:focus {
+    background-color: #161A1D;  /* Более темный фон при фокусе */
+    border: 2px solid #d3d3d3;
+    color: #d3d3d3;  /* Светлый текст при фокусе */
+}
+
+        button:hover {
+            background-color: lightgray;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-link a {
+            text-decoration: none;
+            color: #d3d3d3;
+            font-size: 1em;
+            transition: 0.3s ease;
+        }
+
+        .back-link a:hover {
+            color: #d3d3d3;
+        }
+        label, textarea {
+        font-family: 'Century Gothic', sans-serif;
+        font-weight: normal;
+    }
+
+    textarea {
+    font-size: 1.2em;  /* Размер шрифта для textarea */
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid #d3d3d3;
+    background-color: rgba(42, 47, 52, 1);  /* Темный полупрозрачный фон */
+    color: #d3d3d3;  /* Светлый текст */
+    transition: background-color 0.3s ease, border 0.3s ease;
+    width: 95%;  /* Чтобы textarea занимала всю доступную ширину */
+}
+
+textarea:focus {
+    background-color: #161A1D;  /* Более темный фон при фокусе */
+    border: 2px solid #d3d3d3;
+    color: #d3d3d3;  /* Светлый текст при фокусе */
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Создать проект</h1>
+        <form action="{{ url_for('create_project') }}" method="POST">
+            <label for="name">Название проекта</label>
+            <input type="text" id="name" name="name" placeholder="Введите название проекта" required>
+
+            <label for="description">Описание</label>
+            <textarea id="description" name="description" rows="5" placeholder="Введите описание проекта"></textarea>
+
+            <button type="submit"><i class="fas fa-check"></i> Создать</button>
+        </form>
+        <div class="back-link">
+            <a href="{{ url_for('projects') }}"><i class="fas fa-arrow-left"></i> Вернуться к списку проектов</a>
+        </div>
+    </div>
+</body>
+</html>

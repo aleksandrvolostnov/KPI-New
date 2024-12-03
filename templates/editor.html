@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список файлов</title>
+    <style>
+        /* Стили для body */
+        body {
+            font-family: 'Century Gothic', sans-serif;
+            background-size: cover; /* Изображение будет растягиваться на весь экран */
+            background-position: center; /* Центрирование изображения */
+            background-attachment: fixed; /* Фиксация фона при прокрутке */
+            background-color: #161A1D;
+            color: #D3D3D3;            margin: 0;
+            padding: 0;
+            height: 100vh; /* Занимает всю высоту окна */
+        }
+
+        /* Контейнер для контента */
+        .container {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1; /* Убедимся, что текст будет отображаться поверх фона */
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: normal;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: rgba(42, 47, 52, 1);
+            border-radius: 8px; /* Скругление углов */
+            font-weight: normal;
+        }
+
+        table th, table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            font-weight: normal;
+        }
+
+        table th {
+            background-color: #d3d3d3;
+            color: #161A1D;
+            font-weight: normal;
+
+        }
+
+        table tr:hover {
+            background-color: #d3d3d3;
+            color: #161A1D;
+            font-weight: normal;
+        }
+
+        .button {
+            color: #d3d3d3;
+            padding: 10px;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .button:hover {
+            color: #161A1D;
+            text-decoration: underline;
+        }
+
+        /* Стиль для кнопки "Дэшборд" */
+        .dashboard-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #2A2F34;
+            color: #d3d3d3;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 1em;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            font-family: 'Century Gothic', sans-serif;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .dashboard-button:hover {
+            background-color: #161A1D;
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Кнопка "Дэшборд" -->
+    <a href="{{ url_for('dashboard') }}" class="dashboard-button">Дэшборд</a>
+
+    <div class="container">
+        <h1>Список файлов</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Имя файла</th>
+                    <th>Действие</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for filename in files %}
+                <tr>
+                    <td>{{ filename }}</td>
+                    <td>
+                        <a href="{{ url_for('edit_document', filename=filename) }}" class="button">Редактировать</a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="3">Нет файлов для отображения.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

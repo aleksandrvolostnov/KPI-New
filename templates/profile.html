@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль пользователя</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            background-size: cover;
+            background-position: center;
+            font-family: 'Century Gothic', sans-serif;
+            background-color: #161A1D;
+            color: #D3D3D3;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 32px;
+            text-align: center;
+            font-weight: normal;
+        }
+        h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            text-align: center;
+            font-weight: normal;
+        }
+
+        .profile-form {
+            background-color: rgba(42, 47, 52, 1);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .profile-form label {
+            font-size: 18px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .profile-form input[type="email"],
+        .profile-form input[type="text"],
+        .profile-form input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 2px solid #d3d3d3;
+            background-color: rgba(42, 47, 52, 1);
+            border-radius: 10px;
+            font-size: 18px;
+            box-sizing: border-box;
+            color: #d3d3d3;
+            font-family: 'Century Gothic', sans-serif;
+        }
+
+        /* Стили для кнопки типа button для выбора файла */
+        .upload-file-button {
+            background-color: #d3d3d3;
+            color: #161A1D;
+            padding: 12px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 10px;
+            width: 100%;
+            text-align: center;
+            transition: background-color 0.3s ease;
+            border: none;
+        }
+
+        .upload-file-button:hover {
+            background-color: #161A1D;
+            color: #d3d3d3;
+        }
+
+        .avatar-preview {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .avatar-preview img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #2A2F34;
+        }
+
+        /* Кнопка сохранения изменений */
+        .profile-form button {
+            background-color: #d3d3d3;
+            color: #161A1D;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            transition: background-color 0.3s ease;
+            font-family: 'Century Gothic', sans-serif;
+        }
+
+        .profile-form button:hover {
+            background-color: #161A1D;
+            color: #d3d3d3;
+        }
+
+        /* Кнопка вернуться на дэшборд */
+        .dashboard-link {
+            background-color: #d3d3d3;
+            color: #161A1D;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+            width: 92%;
+            max-width: 500px;
+            transition: background-color 0.3s ease;
+            font-family: 'Century Gothic', sans-serif;
+        }
+
+        .dashboard-link:hover {
+            background-color: #161A1D;
+            color: #d3d3d3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Редактирование профиля</h1>
+        <div class="profile-form">
+            <form method="POST" enctype="multipart/form-data">
+                <h2> <span>{{ user.username }}</span></h2>
+                <!-- Поле для почты -->
+                <label for="email">Почта:</label>
+                <input type="email" id="email" name="email" value="{{ user.email or '' }}" placeholder="Добавьте почту">
+
+                <!-- Поле для телефона -->
+                <label for="phone">Телефон:</label>
+                <input type="text" id="phone" name="phone" value="{{ user.phone or '' }}" placeholder="Добавьте номер телефона">
+
+                <!-- Кнопка для выбора файла с тем же стилем, что и остальные кнопки -->
+                <label for="avatar">Аватарка:</label>
+                <button type="button" class="upload-file-button" onclick="document.getElementById('avatar').click();">Выберите файл</button>
+                <input type="file" id="avatar" name="avatar" accept="image/*" onchange="previewImage(event)" style="display: none;">
+
+                <!-- Предпросмотр аватарки -->
+                <div class="avatar-preview" id="avatarPreviewContainer" {% if not user.avatar %}style="display: none;"{% endif %}>
+                    <img id="avatarPreview" src="{{ url_for('uploaded_file', filename=user.avatar) if user.avatar else '' }}" alt="Предпросмотр аватарки">
+                </div>
+
+                <!-- Кнопка сохранения изменений -->
+                <button type="submit">Сохранить изменения</button>
+
+                <!-- Ссылка для возврата на дэшборд внутри формы -->
+                <a href="{{ url_for('dashboard') }}" class="dashboard-link">Вернуться на дэшборд</a>
+            </form>
+        </div>
+    </div>
+
+    <script>
+function previewImage(event) {
+    const input = event.target;
+    const previewContainer = document.getElementById('avatarPreviewContainer');
+    const previewImage = document.getElementById('avatarPreview');
+
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            previewImage.src = e.target.result;
+            previewContainer.style.display = 'flex';
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+</script>
+</body>
+</html>

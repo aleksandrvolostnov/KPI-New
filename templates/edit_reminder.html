@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактирование напоминания</title>
+
+    <!-- Подключаем Choices.js -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+
+    <!-- Подключаем flatpickr -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <style>
+        body {
+            background-color: #161A1D;
+            color: #D3D3D3;
+            background-size: cover;
+            background-position: center;
+            font-family: 'Century Gothic', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 32px;
+            text-align: center;
+            font-weight: normal;
+        }
+
+        .form-container {
+            background-color: rgba(42, 47, 52, 1);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        input[type="text"],
+        .choices__inner,
+        textarea {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            color: #D1D1D1;
+            border: 2px solid #d3d3d3;
+            border-radius: 10px;
+            font-family: 'Century Gothic', sans-serif;
+            font-size: 16px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            box-sizing: border-box;
+            background-color: #2A2F34;
+
+        }
+
+        input[type="text"]:focus,
+        .choices__inner:focus,
+        textarea:focus {
+            border-color: #d3d3d3;
+            box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.2);
+            outline: none;
+            background-color: #2A2F34;
+
+        }
+.choices__list .choices__item:hover {
+        background-color: #2A2F34 !important;
+        color: #A4161A !important;
+        border: none !important;
+    }
+            .choices__list .choices__item {
+        background-color: #2A2F34 !important;
+        color: #d3d3d3 !important;
+        border: none !important;
+    }
+        .button {
+            background-color: #d3d3d3;
+            color: #161A1D;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            width: 100%; /* Сделаем кнопки на всю ширину контейнера */
+            padding: 12px;
+            text-align: center;
+            border-radius: 10px;
+            display: block;
+            margin: 10px 0; /* Отступ между кнопками */
+            font-family: 'Century Gothic', sans-serif;
+            text-decoration: none; /* Убираем подчеркивание */
+        }
+
+        .button:hover {
+            background-color: #161A1D;
+            color: #d3d3d3;
+        }
+
+        .flash {
+            color: red;
+            margin-bottom: 15px;
+            font-family: 'Century Gothic', sans-serif;
+        }
+
+        .choices__list--dropdown .choices__item--selectable:hover {
+            background-color: lightgray;
+            color: #3C3C3C;
+        }
+
+        /* Стили для кастомного календаря flatpickr */
+        #datetime-local {
+            padding: 15px;
+            border: 2px solid #d3d3d3;
+            border-radius: 10px;
+            font-family: 'Century Gothic', sans-serif;
+            font-size: 16px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            box-sizing: border-box;
+            background-color: #2A2F34;
+            color: #d3d3d3;
+            width: 100%;
+        }
+
+        .flatpickr-calendar {
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .flatpickr-month {
+            background-color: lightgray;
+            color: black;
+            border-radius: 8px;
+        }
+
+        .flatpickr-day:hover {
+            background-color: #3C3C3C;
+            color: white;
+        }
+
+        .flatpickr-day.selected {
+            background-color: #3C3C3C;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Редактирование напоминания</h1>
+
+        <div class="form-container">
+            <form method="POST" action="{{ url_for('edit_reminder', reminder_id=reminder.id) }}">
+                <input type="text" name="title" placeholder="Название напоминания" value="{{ reminder.title }}" required>
+                <textarea name="description" placeholder="Описание напоминания" rows="4">{{ reminder.description }}</textarea>
+
+                <!-- Обновляем инпут для даты и времени, чтобы использовать flatpickr -->
+                <input type="text" id="datetime-local" name="reminder_date" value="{{ reminder.reminder_date.strftime('%Y-%m-%dT%H:%M:%S') }}" required>
+
+                <select id="priority" name="priority" required>
+                    <option value="">Выберите приоритет</option>
+                    <option value="Низкий" {% if reminder.priority == 'Низкий' %}selected{% endif %}>Низкий</option>
+                    <option value="Средний" {% if reminder.priority == 'Средний' %}selected{% endif %}>Средний</option>
+                    <option value="Высокий" {% if reminder.priority == 'Высокий' %}selected{% endif %}>Высокий</option>
+                </select>
+
+                <select id="repeat" name="repeat" required>
+                    <option value="Нет" {% if reminder.repeat == 'Нет' %}selected{% endif %}>Не повторяется</option>
+                    <option value="Ежедневно" {% if reminder.repeat == 'Ежедневно' %}selected{% endif %}>Ежедневно</option>
+                    <option value="Еженедельно" {% if reminder.repeat == 'Еженедельно' %}selected{% endif %}>Еженедельно</option>
+                    <option value="Ежемесячно" {% if reminder.repeat == 'Ежемесячно' %}selected{% endif %}>Ежемесячно</option>
+                </select>
+
+                <button type="submit" class="button">Сохранить изменения</button>
+            </form>
+
+            <form method="GET" action="{{ url_for('view_reminders') }}">
+                <button type="submit" class="button">Назад к списку напоминаний</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Инициализация Choices.js для select
+            const elements = document.querySelectorAll('select');
+            elements.forEach(function (element) {
+                new Choices(element, {
+                    searchEnabled: false,
+                    itemSelectText: '',
+                });
+            });
+
+            // Инициализация flatpickr для поля с датой и временем
+            flatpickr("#datetime-local", {
+                enableTime: true,  // Включить выбор времени
+                dateFormat: "Y-m-d\\TH:i", // Формат отображаемой даты, с T между датой и временем
+                minDate: "today",  // Запретить выбор прошедших дат
+                time_24hr: true,   // 24-часовой формат времени
+                theme: "dark",     // Темная тема
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактирование задачи</title>
+
+    <!-- Подключаем Choices.js -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+
+    <!-- Подключение CSS для Flatpickr -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <!-- Подключение JS для Flatpickr -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <style>
+        body {
+            background-color: #161A1D;
+            color: #D3D3D3;
+            background-size: cover;
+            background-position: center;
+            font-family: 'Century Gothic', sans-serif;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 32px;
+            text-align: center;
+            font-weight: normal;
+        }
+
+        .form-container {
+            background-color: rgba(42, 47, 52, 1);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        .choices__inner,
+        .button,
+        textarea {
+            width: 100%;
+            background-color: rgba(42, 47, 52, 1);
+            padding: 15px;
+            margin-bottom: 15px;
+            color: #d3d3d3;
+            border: 2px solid #d3d3d3;
+            border-radius: 10px;
+            font-family: 'Century Gothic', sans-serif;
+            font-size: 16px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        input[type="text"]:focus,
+        input[type="date"]:focus,
+        .choices__inner:focus,
+        textarea:focus {
+            border-color: #d3d3d3;
+            box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.2);
+            outline: none;
+            background-color: rgba(42, 47, 52, 1);
+
+        }
+        .choices__list .choices__item:hover {
+        background-color: #2A2F34 !important;
+        color: #A4161A !important;
+        border: none !important;
+    }
+            .choices__list .choices__item {
+        background-color: #2A2F34 !important;
+        color: #d3d3d3 !important;
+        border: none !important;
+    }
+        .button {
+            background-color: #d3d3d3;
+            color: #161A1D;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #161A1D;
+            color: #d3d3d3;
+        }
+
+        .flash {
+            color: red;
+            margin-bottom: 15px;
+            font-family: 'Century Gothic', sans-serif;
+        }
+
+        .choices__list--dropdown .choices__item--selectable:hover {
+            background-color: lightgray;
+            color: #3C3C3C;
+        }
+
+        .file-upload-button {
+            background-color: #d3d3d3;
+            color: #161A1D;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 95%;
+            text-align: center;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .file-upload-button:hover {
+            background-color: #161A1D;
+            color: #d3d3d3;
+        }
+
+        .file-list {
+            list-style-type: none;
+            padding-left: 0;
+            text-align: center;
+        }
+
+        .file-list li {
+            color: #d3d3d3;
+            font-family: 'Century Gothic', sans-serif;
+            border: none;
+            margin-bottom: 5px;
+        }
+
+        .file-list a {
+            color: #d3d3d3;
+            text-decoration: underline;
+            display: inline-block;
+        }
+
+        .file-list a:hover {
+            color: #A4161A;
+        }
+
+        .delete-button {
+            background-color: #d3d3d3;
+            margin-left: 10px;
+            cursor: pointer;
+            color: #161A1D;
+        }
+
+        .delete-button:hover {
+            background-color: #161A1D;
+            text-decoration: underline;
+            color: #161A1D;
+        }
+
+        .file-list li strong {
+            font-family: 'Century Gothic', sans-serif;
+            font-size: 1.2em;
+            font-weight: normal;
+        }
+
+        /* Стилизация календаря Flatpickr */
+        .flatpickr-calendar {
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .flatpickr-month {
+            background-color: lightgray;
+            color: black;
+            border-radius: 8px;
+        }
+
+        .flatpickr-day:hover {
+            background-color: #3C3C3C;
+            color: white;
+        }
+
+        .flatpickr-day.selected {
+            background-color: #3C3C3C;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Редактирование задачи</h1>
+
+        <div class="form-container">
+            <form method="POST" action="{{ url_for('edit_task', task_id=task.id) }}" enctype="multipart/form-data">
+                <input type="text" name="title" placeholder="Название задачи" value="{{ task.title }}" required>
+                <input type="text" name="description" placeholder="Описание задачи" value="{{ task.description }}" required>
+
+                <select id="priority" name="priority" required>
+                    <option value="">Выберите приоритет</option>
+                    <option value="Низкий" {% if task.priority == 'Низкий' %}selected{% endif %}>Низкий приоритет (не срочный)</option>
+                    <option value="Средний" {% if task.priority == 'Средний' %}selected{% endif %}>Средний приоритет (важный)</option>
+                    <option value="Высокий" {% if task.priority == 'Высокий' %}selected{% endif %}>Высокий приоритет (критический)</option>
+                </select>
+
+                <!-- Поле с календарем -->
+                <input type="text" id="due_date" name="due_date" placeholder="Выберите дату" value="{{ task.due_date.strftime('%Y-%m-%d') }}" required>
+
+                <select id="difficulty" name="difficulty" required>
+                    <option value="">Выберите уровень сложности</option>
+                    <option value="1" {% if task.difficulty == 1 %}selected{% endif %}>Краткосрочные (до 2 часов)</option>
+                    <option value="2" {% if task.difficulty == 2 %}selected{% endif %}>Среднесрочные (от 2 до 8 часов)</option>
+                    <option value="3" {% if task.difficulty == 3 %}selected{% endif %}>Долгосрочные (более 8 часов)</option>
+                </select>
+
+                <select id="assigned_to" name="assigned_to" required>
+                    <option value="">Выберите исполнителя</option>
+                    {% for user in users %}
+                    <option value="{{ user.id }}" {% if task.assigned_to_id == user.id %}selected{% endif %}>{{ user.username }}</option>
+                    {% endfor %}
+                </select>
+
+                <select id="status" name="status" required>
+                    <option value="In Progress" {% if task.status == 'In Progress' %}selected{% endif %}>В процессе</option>
+                    <option value="Completed" {% if task.status == 'Completed' %}selected{% endif %}>Выполнено</option>
+                </select>
+
+                <!-- Поле для комментариев -->
+                <textarea name="comments" placeholder="Комментарии к задаче" rows="4">{{ task.comments }}</textarea>
+
+                <label class="file-upload-button" for="file-upload">Выберите файлы</label>
+                <input id="file-upload" type="file" name="task_files[]" multiple style="display:none;" onchange="updateFileList()">
+
+                <!-- Список загруженных файлов -->
+                <ul id="file-list" class="file-list">
+                    <li><strong>Загруженные файлы:</strong></li>
+                    {% if files %}
+                        {% for file in files %}
+                        <li>
+                            <a href="{{ url_for('download_file', filename=file.filename) }}" target="_blank">{{ file.filename }}</a>
+                            <span class="delete-button" onclick="deleteFile({{ file.id }})">Удалить</span>
+                        </li>
+                        {% endfor %}
+                    {% else %}
+                        <li>Файлы не загружены.</li>
+                    {% endif %}
+                </ul>
+
+                <button type="submit" class="button">Сохранить изменения</button>
+            </form>
+
+            <form action="{{ url_for('dashboard') }}">
+                <button type="submit" class="button">Меню</button>
+            </form>
+            <form method="POST" action="{{ url_for('delete_task', task_id=task.id) }}" onsubmit="return confirm('Вы уверены, что хотите удалить эту задачу?');">
+                <button type="submit" class="button" style="background-color: #d3d3d3; color: #161A1D; font-size: 16px;">Удалить задачу</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Инициализация Flatpickr для поля due_date
+            flatpickr("#due_date", {
+                dateFormat: "Y-m-d", // Формат отображаемой даты
+                minDate: "today", // Запретить выбор дат в прошлом
+                locale: "ru", // Локализация на русский
+                prevArrow: "&lt;", // Стрелка для предыдущего месяца
+                nextArrow: "&gt;", // Стрелка для следующего месяца
+            });
+
+            // Инициализация Choices для select элементов
+            const priorityElement = document.querySelector('#priority');
+            const difficultyElement = document.querySelector('#difficulty');
+            const assignedToElement = document.querySelector('#assigned_to');
+            const statusElement = document.querySelector('#status');
+            new Choices(priorityElement, { searchEnabled: false });
+            new Choices(difficultyElement, { searchEnabled: false });
+            new Choices(assignedToElement, { searchEnabled: false });
+            new Choices(statusElement, { searchEnabled: false });
+        });
+
+        function updateFileList() {
+            const fileList = document.getElementById('file-list');
+            const files = document.getElementById('file-upload').files;
+            fileList.innerHTML = ''; // Очищаем список файлов
+            if (files.length > 0) {
+                for (let i = 0; i < files.length; i++) {
+                    const li = document.createElement('li');
+                    li.innerHTML = files[i].name;
+                    fileList.appendChild(li);
+                }
+            }
+        }
+
+        function deleteFile(fileId) {
+            // Здесь должен быть код для удаления файла с сервера
+        }
+    </script>
+</body>
+</html>
