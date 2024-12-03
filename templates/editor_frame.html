@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактор документа</title>
+    <style>
+        /* Стили для body */
+        body {
+            font-family: 'Century Gothic', sans-serif;
+            background-size: cover; /* Изображение будет растягиваться на весь экран */
+            background-position: center; /* Центрирование изображения */
+            background-attachment: fixed; /* Фиксация фона при прокрутке */
+            color: #800020;
+            margin: 0;
+            padding: 0;
+            height: 100vh; /* Занимает всю высоту окна */
+        }
+
+        /* Контейнер для контента */
+        .container {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1; /* Убедимся, что текст будет отображаться поверх фона */
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Контейнер для редактора */
+        #editor {
+            width: 100%;
+            height: 100vh;
+            background-color: rgba(255, 255, 255, 0.6); /* Полупрозрачный фон для контейнера */
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); /* Тень вокруг контейнера */
+        }
+    </style>
+    <script src="http://127.0.0.1:80/web-apps/apps/api/documents/api.js"></script> <!-- Путь к API -->
+</head>
+<body>
+    <div class="container">
+        <h1>Редактирование документа: {{ document_config['document']['title'] }}</h1>
+
+        <!-- Контейнер для редактора -->
+        <div id="editor"></div>
+
+        <script>
+            // Логирование и отладка
+            console.log("Документная конфигурация:", {{ document_config | tojson | safe }});
+
+            try {
+                // Инициализация редактора с параметрами
+                var docEditor = new DocsAPI.DocEditor("editor", {
+                    "document": {
+                        "fileType": "{{ document_config.document.fileType }}",  // Тип файла
+                        "key": "{{ document_config.document.key }}",           // Уникальный ключ документа
+                        "title": "{{ document_config.document.title }}",       // Заголовок документа
+                        "url": "{{ document_config.document.url }}",           // URL файла
+                        "permissions": {"edit": true}                           // Права доступа
+                    },
+                    "editorConfig": {
+                        "callbackUrl": "{{ document_config.editorConfig.callbackUrl }}",  // URL для обратного вызова
+                        "mode": "edit",  // Режим редактирования
+                        "lang": "ru",    // Язык интерфейса
+                        "user": {
+                            "id": "user123",         // Пример ID пользователя
+                            "name": "Имя пользователя" // Имя пользователя
+                        }
+                    },
+                    "events": {
+                        "onAppReady": function() {
+                            console.log("Приложение готово.");
+                        },
+                        "onDocumentStateChange": function(event) {
+                            console.log("Состояние документа изменилось:", event);
+                        },
+                        "onError": function(event) {
+                            console.error("Ошибка в редакторе:", event);
+                            // Логирование подробностей ошибки
+                            if (event && event.data) {
+                                console.error("Подробности ошибки:", event.data);
+                            }
+                        }
+                    }
+                });
+
+                console.log("Редактор успешно инициализирован:", docEditor);
+            } catch (error) {
+                console.error("Ошибка при инициализации редактора:", error);
+            }
+        </script>
+
+    </div>
+</body>
+</html>
