@@ -7,11 +7,12 @@ import io
 from calendar import monthcalendar, month_name
 from babel.dates import format_date
 import locale
-
+import os
+from werkzeug.utils import secure_filename
 from openpyxl.chart import BarChart, Reference
 from werkzeug.utils import secure_filename
 import json
-
+from hashlib import md5
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key'
@@ -38,9 +39,13 @@ class User(db.Model, UserMixin):
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     role = db.relationship('Role', backref='users')
+    email = db.Column(db.String(150), unique=True, nullable=True)  # Новое поле для почты
+    phone = db.Column(db.String(20), nullable=True)  # Новое поле для телефона
+    avatar = db.Column(db.String(255), nullable=True)  # Новое поле для аватарки
 
     sent_messages = db.relationship('Message', foreign_keys='Message.sender_id', backref='sender_rel', lazy='dynamic')
     received_messages = db.relationship('Message', foreign_keys='Message.receiver_id', backref='receiver_rel', lazy='dynamic')
+
 
 
 class Message(db.Model):
@@ -65,9 +70,6 @@ class Message(db.Model):
     def update_timestamp(self):
         self.updated_at = datetime.utcnow()
 
-
-from datetime import datetime
-from sqlalchemy.orm import relationship
 
 
 class Task(db.Model):
@@ -143,6 +145,55 @@ class File(db.Model):
     filename = db.Column(db.String(255), nullable=False)
     task_id = db.Column(db.Integer, db.ForeignKey('tasks.id'))  # Внешний ключ для привязки к задаче
 
+
+@app.route('/profile', methods=['GET', 'POST'])
+@login_required
+def profile():
+    if request.method == 'POST':
+        # Проверка и обновление почты
+        if 'email' in request.form:
+            email = request.form['email']
+            if email:  # Если email не пустой, обновляем
+                current_user.email = email
+                flash('Почта обновлена!', 'success')
+            else:  # Если email пустой, удаляем его
+                current_user.email = None
+                flash('Почта удалена!', 'success')
+
+        # Проверка и обновление телефона
+        if 'phone' in request.form:
+            phone = request.form['phone']
+            if phone:  # Если телефон не пустой, обновляем
+                current_user.phone = phone
+                flash('Телефон обновлен!', 'success')
+            else:  # Если телефон пустой, удаляем его
+                current_user.phone = None
+                flash('Телефон удален!', 'success')
+
+        # Загрузка аватарки
+        if 'avatar' in request.files:
+            avatar_file = request.files['avatar']
+            if avatar_file and allowed_file(avatar_file.filename):  # Проверка на допустимый файл
+                avatar_filename = secure_filename(avatar_file.filename)  # Безопасное имя файла
+                avatar_path = os.path.join(app.config['UPLOAD_FOLDER'], avatar_filename)
+
+                # Сохранение аватарки в папке uploads
+                avatar_file.save(avatar_path)
+
+                # Сохранение имени аватарки в базе данных
+                current_user.avatar = avatar_filename
+                flash('Аватарка обновлена!', 'success')
+
+        db.session.commit()  # Сохраняем изменения в базе данных
+        return redirect(url_for('profile'))  # Перенаправляем на страницу профиля
+
+    return render_template('profile.html', user=current_user)
+@app.route('/user/<int:user_id>')
+@login_required
+def view_user(user_id):
+    user = User.query.get_or_404(user_id)
+    return render_template('user_profile.html', user=user)
+
 # Логин менеджер
 @login_manager.user_loader
 def load_user(user_id):
@@ -154,11 +205,6 @@ def load_user(user_id):
 def index():
     return render_template('welcome.html')
 
-
-# Функция получения последнего сообщения, учитывая как текст, так и файл
-
-# Основной маршрут для чата
-# Основной маршрут для чата
 # Функция для обработки прочитанных сообщений
 def mark_messages_as_read(sender_id, receiver_id):
     unread_messages = Message.query.filter_by(receiver_id=receiver_id, sender_id=sender_id, is_read=False).all()
@@ -166,7 +212,6 @@ def mark_messages_as_read(sender_id, receiver_id):
         msg.is_read = True
         db.session.commit()
 
-# Получение последнего сообщения
 # Функция для получения последнего сообщения
 def get_last_message(user_id_1, user_id_2):
     last_message = Message.query.filter(
@@ -178,7 +223,6 @@ def get_last_message(user_id_1, user_id_2):
         return last_message
     return None
 
-# Основной маршрут для чата
 # Основной маршрут для чата
 @app.route('/chat/<user_id>', methods=['GET', 'POST'])
 @login_required
@@ -337,7 +381,6 @@ def reply_to_message(message_id):
 
     return jsonify({'status': 'error', 'message': 'Невозможно отправить ответ'})
 
-import os
 
 @app.route('/uploads/<filename>')
 @login_required
@@ -406,10 +449,39 @@ def dashboard():
         tasks = Task.query.all()
     else:
         tasks = Task.query.filter((Task.user_id == current_user.id) | (Task.assigned_to_id == current_user.id)).all()
-    return render_template('dashboard.html', tasks=tasks)
 
-import os
-from werkzeug.utils import secure_filename
+    # Сортируем задачи по сроку дедлайна (ближайшие сначала)
+    tasks_sorted = sorted(tasks, key=lambda x: x.due_date)
+
+    # Берем только первые 3 задачи с ближайшими дедлайнами
+    upcoming_tasks = tasks_sorted[:3]
+
+    # Аналитика
+    total_tasks = len(tasks)
+    low_priority_count = Task.query.filter_by(priority='Низкий').count()
+    medium_priority_count = Task.query.filter_by(priority='Средний').count()
+    high_priority_count = Task.query.filter_by(priority='Высокий').count()
+
+    # Количество задач по сложности (исходя из числовых значений)
+    easy_count = Task.query.filter_by(difficulty=1).count()
+    medium_count = Task.query.filter_by(difficulty=2).count()
+    hard_count = Task.query.filter_by(difficulty=3).count()
+
+    # Для вычисления средней сложности задач
+    average_difficulty = db.session.query(db.func.avg(Task.difficulty)).scalar()
+
+    return render_template('dashboard.html',
+                           tasks=upcoming_tasks,  # передаем только 3 задачи
+                           total_tasks=total_tasks,
+                           low_priority_count=low_priority_count,
+                           medium_priority_count=medium_priority_count,
+                           high_priority_count=high_priority_count,
+                           average_difficulty=average_difficulty,
+                           easy_count=easy_count,
+                           medium_count=medium_count,
+                           hard_count=hard_count)
+
+
 
 # Путь для сохранения загружаемых файлов
 UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')
@@ -596,16 +668,11 @@ def tasks():
         tasks = tasks_query.all()
 
     else:
-        # Show all tasks for everyone (admin & regular users)
         tasks = Task.query.all()
 
     return render_template('tasks.html', tasks=tasks, users=users)
-  # Передаем список пользователей
-import locale
-from datetime import datetime
-from calendar import monthcalendar, month_name
-from flask import render_template, request
-from flask_login import login_required, current_user
+
+
 # Устанавливаем локаль для русского языка
 locale.setlocale(locale.LC_TIME, 'Russian_Russia')
 # Календарь задач
@@ -623,10 +690,16 @@ def calendar():
         current_year -= 1
 
     if current_user.role.role_name == 'Admin':
-            tasks = Task.query.all()
+        tasks = Task.query.filter(
+            db.extract('year', Task.due_date) == current_year,
+            db.extract('month', Task.due_date) == current_month
+        ).all()
     else:
-            tasks = Task.query.filter(
-                (Task.user_id == current_user.id) | (Task.assigned_to_id == current_user.id)).all()
+        tasks = Task.query.filter(
+            (Task.user_id == current_user.id) | (Task.assigned_to_id == current_user.id),
+            db.extract('year', Task.due_date) == current_year,
+            db.extract('month', Task.due_date) == current_month
+        ).all()
 
     days_in_month = monthcalendar(current_year, current_month)
     calendar_days = []
@@ -637,15 +710,9 @@ def calendar():
             if day != 0:
                 date = datetime(current_year, current_month, day)
                 tasks_for_day = [task for task in tasks if task.due_date.date() == date.date()]
-                week_data.append({
-                    'date': date,
-                    'tasks': tasks_for_day
-                })
+                week_data.append({'date': date, 'tasks': tasks_for_day})
             else:
-                week_data.append({
-                    'date': None,
-                    'tasks': []
-                })
+                week_data.append({'date': None, 'tasks': []})
         calendar_days.append(week_data)
 
     current_month_name = month_name[current_month]
@@ -655,6 +722,30 @@ def calendar():
     previous_year = current_year if current_month > 1 else current_year - 1
     next_year = current_year if current_month < 12 else current_year + 1
 
+    # Подсчёт задач по сложности
+    easy_count = Task.query.filter(
+        Task.difficulty == 1,
+        db.extract('year', Task.due_date) == current_year,
+        db.extract('month', Task.due_date) == current_month
+    ).count()
+
+    medium_count = Task.query.filter(
+        Task.difficulty == 2,
+        db.extract('year', Task.due_date) == current_year,
+        db.extract('month', Task.due_date) == current_month
+    ).count()
+
+    hard_count = Task.query.filter(
+        Task.difficulty == 3,
+        db.extract('year', Task.due_date) == current_year,
+        db.extract('month', Task.due_date) == current_month
+    ).count()
+
+    # Подсчёт задач по приоритетам
+    low_priority_count = sum(1 for task in tasks if task.priority == 'Низкий')
+    medium_priority_count = sum(1 for task in tasks if task.priority == 'Средний')
+    high_priority_count = sum(1 for task in tasks if task.priority == 'Высокий')
+
     return render_template('calendar.html',
                            calendar_days=calendar_days,
                            current_month_name=current_month_name,
@@ -663,7 +754,14 @@ def calendar():
                            previous_month=previous_month,
                            next_month=next_month,
                            previous_year=previous_year,
-                           next_year=next_year)
+                           next_year=next_year,
+                           easy_count=easy_count,
+                           medium_count=medium_count,
+                           hard_count=hard_count,
+                           low_priority_count=low_priority_count,
+                           medium_priority_count=medium_priority_count,
+                           high_priority_count=high_priority_count)
+
 
 @app.before_request
 def check_deadlines():
@@ -754,11 +852,6 @@ def calculate_kpi(tasks):
     return kpi_score
 
 
-from datetime import datetime
-from openpyxl import Workbook
-from openpyxl.utils import get_column_letter
-import io
-
 @app.route('/download_report', methods=['POST'])
 @login_required
 def download_report():
@@ -832,7 +925,6 @@ def download_report():
         download_name=f'report_{start_date_str}_to_{end_date_str}.xlsx'
     )
 from flask import send_file
-from datetime import datetime
 from openpyxl import Workbook
 from openpyxl.chart import BarChart, Reference
 from openpyxl.utils import get_column_letter
@@ -905,12 +997,10 @@ def download_all_kpis():
     )
 
 
-
-
 # Маршруты для диаграммы Ганта
 from datetime import datetime
 from flask import Flask, jsonify, request
-from flask_sqlalchemy import SQLAlchemy
+
 # Маршрут для диаграммы Ганта
 @app.route('/gantt', methods=['GET', 'POST'])
 @login_required
@@ -1142,12 +1232,24 @@ def editor_page():
     return render_template('editor.html', files=files)
 
 
+from flask_login import current_user
+
+UPLOAD_FOLDER = 'uploads'
+ALLOWED_EXTENSIONS = {'docx', 'xlsx', 'pptx', 'txt'}
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
 @app.route('/edit/<filename>', methods=['GET'])
 def edit_document(filename):
-    app.logger.info(f"Начата работа с файлом: {filename}")
-    document_key = f"{filename}_unique_key"
+    # Уникальный ключ для документа
+    document_key = md5(f"{filename}_{current_user.id}_{datetime.utcnow()}".encode()).hexdigest()
+
     file_url = f"http://127.0.0.1:5000/uploads/{filename}"
     callback_url = f"http://127.0.0.1:5000/callback"
+
+    # Конфигурация документа
     document_config = {
         "document": {
             "fileType": filename.split('.')[-1].lower(),
@@ -1161,23 +1263,18 @@ def edit_document(filename):
             "mode": "edit",
             "lang": "ru",
             "user": {
-                "id": "user123",
-                "name": "Имя пользователя"
+                "id": current_user.id,
+                "name": current_user.username
             }
         }
     }
+
+    # Логирование конфигурации
     app.logger.info(f"Конфигурация документа: {document_config}")
+
+    # Передача конфигурации в шаблон
     return render_template('editor_frame.html', document_config=document_config)
 
-
-
-
-
-
-ALLOWED_EXTENSIONS = {'docx', 'xlsx', 'pptx', 'txt'}
-
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route('/upload/<task_id>', methods=['POST'])
 def upload_file_for_task(task_id):
@@ -1188,37 +1285,38 @@ def upload_file_for_task(task_id):
         return "No selected file", 400
     if not allowed_file(file.filename):
         return "Недопустимый формат файла.", 400
+
     file_path = os.path.join(UPLOAD_FOLDER, file.filename)
+    os.makedirs(UPLOAD_FOLDER, exist_ok=True)  # Создаём папку, если её нет
     file.save(file_path)
 
-    # Добавляем файл в таблицу с привязкой к задаче
+    # Логирование загрузки файла
+    app.logger.info(f"Файл {file.filename} успешно загружен в {UPLOAD_FOLDER}")
+
+    # Добавляем файл в базу данных
     new_file = File(filename=file.filename, task_id=task_id)
     db.session.add(new_file)
     db.session.commit()
 
     return redirect(url_for('editor_page', task_id=task_id))
-from flask import send_from_directory
 
-from flask import send_from_directory
-import mimetypes
-
-
-from flask import send_from_directory
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
+    file_path = os.path.join(UPLOAD_FOLDER, filename)
+
+    # Проверка существования файла
+    if not os.path.exists(file_path):
+        app.logger.error(f"Файл {filename} не найден в {UPLOAD_FOLDER}.")
+        return "Файл не найден", 404
+
+    # Определение MIME-типа
     mime_type, _ = mimetypes.guess_type(filename)
     if not mime_type:
-        # Указываем корректный MIME-тип для поддерживаемых файлов
-        extension = filename.rsplit('.', 1)[-1].lower()
-        mime_types_map = {
-            "docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-            "xlsx": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            "pptx": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-            "txt": "text/plain"
-        }
-        mime_type = mime_types_map.get(extension, "application/octet-stream")
+        mime_type = 'application/octet-stream'
 
+    # Логирование отправки файла
+    app.logger.info(f"Отправка файла {filename} с MIME-типом {mime_type}")
     return send_from_directory(UPLOAD_FOLDER, filename, mimetype=mime_type)
 
 
@@ -1226,25 +1324,8 @@ def uploaded_file(filename):
 def callback():
     data = request.json
     app.logger.info(f"Callback received: {data}")
+    return jsonify({"error": 0})  # Всегда возвращайте успешный ответ
 
-    status = data.get("status")
-    if status == 2:  # Статус 2 — редактирование завершено
-        file_url = data.get("url")
-        file_key = data.get("key")
-        if file_url and file_key:
-            try:
-                response = requests.get(file_url)
-                if response.status_code == 200:
-                    # Сохраняем изменённый файл
-                    file_path = os.path.join(UPLOAD_FOLDER, file_key)
-                    with open(file_path, "wb") as file:
-                        file.write(response.content)
-                    app.logger.info(f"Файл {file_key} успешно обновлён.")
-                else:
-                    app.logger.error(f"Ошибка загрузки файла с Document Server: {response.status_code}")
-            except Exception as e:
-                app.logger.error(f"Ошибка при сохранении файла: {e}")
-    return jsonify({"error": 0})  # Возвращаем успех для OnlyOffice
 
 
 # Запуск приложения
