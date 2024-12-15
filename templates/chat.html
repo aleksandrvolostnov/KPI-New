@@ -36,8 +36,8 @@
             position: absolute;
             top: 20px;
             left: 20px;
-            background-color: #800020;
-            color: lightgray;
+            background-color: whitesmoke;
+            color: #3C3C3C;
             padding: 10px 20px;
             border: none;
             border-radius: 10px;
@@ -49,7 +49,8 @@
         }
 
         .menu-button:hover {
-            background-color: #66001A;
+            background-color: #3C3C3C;
+            color: lightgray;
         }
 
         .user-list {
@@ -62,13 +63,15 @@
         }
 
         h2 {
-            color: #800020;
+            color: #3C3C3C;
+            font-weight: normal;
+            font-size: 1.6em;
         }
 
         .user {
             padding: 10px;
             border-radius: 10px;
-            background-color: rgba(160, 160, 160, 0.8);
+            background-color: #3C3C3C;
             margin-bottom: 10px;
             cursor: pointer;
             display: flex;
@@ -78,7 +81,7 @@
         }
 
         .user:hover {
-            background-color: rgba(128, 0, 32, 0.7);
+            background-color: #1C1C1C;
         }
 
         .notification-dot {
@@ -121,13 +124,13 @@
         }
 
         .message.sent .action-button {
-            background-color: #800020;
+            background-color: #3C3C3C;
             color: lightgray;
         }
 
         .message.received {
             align-self: flex-start;
-            background-color: #800020;
+            background-color: #3C3C3C;
             color: lightgray;
         }
 
@@ -157,7 +160,7 @@
         input[type="text"] {
             flex-grow: 1;
             padding: 10px;
-            border: 2px solid rgba(128, 0, 32, 0.4);
+            border: 2px solid #3C3C3C;
             border-radius: 10px;
             font-family: 'Century Gothic', sans-serif;
             font-size: 16px;
@@ -172,7 +175,7 @@
         }
 
         .send-button {
-            background-color: #800020;
+            background-color: #3C3C3C;
             color: lightgray;
             padding: 10px 15px;
             border: none;
@@ -184,7 +187,7 @@
         }
 
         .send-button:hover {
-            background-color: #66001A;
+            background-color: #1C1C1C;
         }
 
         input[type="file"] {
@@ -194,13 +197,13 @@
         .file-label {
             font-size: 24px;
             cursor: pointer;
-            color: #800020;
+            color: #3C3C3C;
             background-color: transparent;
             border: none;
         }
 
         .file-label:hover {
-            color: #66001A;
+            color: #1C1C1C;
         }
 
         .message-actions {
@@ -229,11 +232,11 @@
         }
 
         .message.sent .action-button {
-            background: linear-gradient(145deg, #800020, #66001A);
+            background: linear-gradient(145deg, #3C3C3C, #1C1C1C);
         }
 
         .message.sent .action-button:hover {
-            background: linear-gradient(145deg, #990026, #4d0014);
+            background: linear-gradient(145deg, #3C3C3C, #1C1C1C);
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
             transform: translateY(-2px);
         }
@@ -248,9 +251,7 @@
             text-decoration: none;
         }
 
-        a:hover {
-            text-decoration: underline;
-        }
+
 
         .popup-notification {
             position: fixed;
@@ -263,6 +264,39 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
             display: none;
         }
+        .user-avatar-link {
+            margin-right: 10px;
+            color: lightgray;
+            font-size: 30px;
+            text-decoration: none;
+        }
+
+        .user-avatar-link:hover {
+            color: #ccc;
+        }
+
+        .user-avatar-icon {
+            font-size: 20px;
+            margin-right: 10px;
+            color: lightgray;
+        }
+
+        .user {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 10px;
+            background-color: #3C3C3C;
+            margin-bottom: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .user:hover {
+            background-color: #1C1C1C;
+        }
+
     </style>
 </head>
 <body>
@@ -279,6 +313,11 @@
             </div>
             {% for user in users %}
             <div class="user" onclick="selectUserForForward('{{ user.id }}')">
+                <!-- Ссылка на профиль с иконкой аватарки -->
+                <a href="{{ url_for('view_user', user_id=user.id) }}" class="user-avatar-link" onclick="event.stopPropagation();">
+                    <i class="fas fa-user-circle user-avatar-icon"></i>
+                </a>
+                <!-- Имя пользователя для открытия чата -->
                 <span>{{ user.username }}</span>
                 <span class="last-message">
                     {% set last_message = last_messages.get(user.id, 'Нет сообщений') %}
@@ -328,6 +367,7 @@
             </div>
         </div>
     </div>
+
 
     <script>
         let currentReplyMessageId = null;
