@@ -12,7 +12,7 @@
             background-size: cover; /* Изображение будет растягиваться на весь экран */
             background-position: center; /* Центрирование изображения */
             background-attachment: fixed; /* Фиксация фона при прокрутке */
-            color: #800020;
+            color: #3C3C3C;
             margin: 0;
             padding: 0;
             height: 100vh; /* Занимает всю высоту окна */
@@ -42,7 +42,7 @@
             margin: 0 auto;
         }
     </style>
-    <script src="http://127.0.0.1:80/web-apps/apps/api/documents/api.js"></script> <!-- Путь к API -->
+    <script src="http://127.0.0.1:80/web-apps/apps/api/documents/api.js"></script>
 </head>
 <body>
     <div class="container">
@@ -52,50 +52,51 @@
         <div id="editor"></div>
 
         <script>
-            // Логирование и отладка
-            console.log("Документная конфигурация:", {{ document_config | tojson | safe }});
+    // Логирование и отладка
+    console.log("Документная конфигурация:", {{ document_config | tojson | safe }});
 
-            try {
-                // Инициализация редактора с параметрами
-                var docEditor = new DocsAPI.DocEditor("editor", {
-                    "document": {
-                        "fileType": "{{ document_config.document.fileType }}",  // Тип файла
-                        "key": "{{ document_config.document.key }}",           // Уникальный ключ документа
-                        "title": "{{ document_config.document.title }}",       // Заголовок документа
-                        "url": "{{ document_config.document.url }}",           // URL файла
-                        "permissions": {"edit": true}                           // Права доступа
-                    },
-                    "editorConfig": {
-                        "callbackUrl": "{{ document_config.editorConfig.callbackUrl }}",  // URL для обратного вызова
-                        "mode": "edit",  // Режим редактирования
-                        "lang": "ru",    // Язык интерфейса
-                        "user": {
-                            "id": "user123",         // Пример ID пользователя
-                            "name": "Имя пользователя" // Имя пользователя
-                        }
-                    },
-                    "events": {
-                        "onAppReady": function() {
-                            console.log("Приложение готово.");
-                        },
-                        "onDocumentStateChange": function(event) {
-                            console.log("Состояние документа изменилось:", event);
-                        },
-                        "onError": function(event) {
-                            console.error("Ошибка в редакторе:", event);
-                            // Логирование подробностей ошибки
-                            if (event && event.data) {
-                                console.error("Подробности ошибки:", event.data);
-                            }
-                        }
+    try {
+        // Инициализация редактора с параметрами
+        var docEditor = new DocsAPI.DocEditor("editor", {
+            "document": {
+                "fileType": "{{ document_config.document.fileType }}",  // Тип файла
+                "key": "{{ document_config.document.key }}",           // Уникальный ключ документа
+                "title": "{{ document_config.document.title }}",       // Заголовок документа
+                "url": "{{ document_config.document.url }}",           // URL файла
+                "permissions": {"edit": true}                           // Права доступа
+            },
+            "editorConfig": {
+                "callbackUrl": "{{ document_config.editorConfig.callbackUrl }}",  // URL для обратного вызова
+                "mode": "edit",  // Режим редактирования
+                "lang": "ru",    // Язык интерфейса
+                "user": {
+                    "id": "{{ document_config.editorConfig.user.id }}",         // Динамический ID пользователя
+                    "name": "{{ document_config.editorConfig.user.name }}"      // Динамическое имя пользователя
+                }
+            },
+            "events": {
+                "onAppReady": function() {
+                    console.log("Приложение готово.");
+                },
+                "onDocumentStateChange": function(event) {
+                    console.log("Состояние документа изменилось:", event);
+                },
+                "onError": function(event) {
+                    console.error("Ошибка в редакторе:", event);
+                    // Логирование подробностей ошибки
+                    if (event && event.data) {
+                        console.error("Подробности ошибки:", event.data);
                     }
-                });
-
-                console.log("Редактор успешно инициализирован:", docEditor);
-            } catch (error) {
-                console.error("Ошибка при инициализации редактора:", error);
+                }
             }
-        </script>
+        });
+
+        console.log("Редактор успешно инициализирован:", docEditor);
+    } catch (error) {
+        console.error("Ошибка при инициализации редактора:", error);
+    }
+</script>
+
     </div>
 </body>
 </html>
