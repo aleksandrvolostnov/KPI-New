@@ -33,7 +33,7 @@
 **Почему это круто?**  
 Эта страница создаёт первое впечатление о системе и мотивирует пользователя погрузиться в работу.
 
-![Welcome Page](путь_к_файлу/скриншот_welcome.png)
+![Welcome Page](static/images/welcomepage.png)
 
 ---
 
@@ -48,7 +48,7 @@
 **Почему это важно?**  
 Безопасность и простота входа гарантируют, что ваши данные всегда под контролем.
 
-![Login Page](путь_к_файлу/скриншот_login.png)
+![Login Page](static/images/loginpage.png)
 
 ---
 
@@ -63,7 +63,7 @@
 **Почему это привлекательно?**  
 Новая учётная запись — новый шаг к упорядоченной и эффективной работе.
 
-![Register Page](путь_к_файлу/скриншот_register.png)
+![Register Page](static/images/registerpage.png)
 
 ---
 
@@ -78,7 +78,8 @@
 **Почему это полезно?**  
 Мгновенный доступ к актуальной информации помогает принимать обоснованные решения.
 
-![Dashboard Page](путь_к_файлу/скриншот_dashboard.png)
+![Dashboard Page](static/images/dashboardpage.png)
+![Dashboard Page](static/images/dashboardpage2.png)
 
 ---
 
@@ -93,7 +94,7 @@
 **Почему это эффективно?**  
 Организованный календарь — ключ к соблюдению сроков и увеличению продуктивности.
 
-![Calendar Page](путь_к_файлу/скриншот_calendar.png)
+![Calendar Page](static/images/calendarpage.png)
 
 ---
 
@@ -108,7 +109,7 @@
 **Почему это ценно?**  
 Визуализация результатов помогает увидеть слабые места и точки роста.
 
-![Reports Page](путь_к_файлу/скриншот_reports.png)
+![Reports Page](static/images/reportspage.png)
 
 ---
 
@@ -123,7 +124,7 @@
 **Почему это удобно?**  
 Настройте профиль под себя и сделайте работу комфортнее.
 
-![Profile Page](путь_к_файлу/скриншот_profile.png)
+![Profile Page](static/images/profile.png)
 
 ---
 
@@ -138,7 +139,8 @@
 **Почему это помогает?**  
 Централизованное управление задачами упрощает рабочий процесс.
 
-![Tasks Page](путь_к_файлу/скриншот_tasks.png)
+![Tasks Page](static/images/taskspage1.png)
+![Tasks Page](static/images/taskspage2.png)
 
 ---
 
@@ -153,7 +155,7 @@
 **Почему это полезно?**  
 Добавление задач никогда не было таким простым и приятным!
 
-![Create Task Page](путь_к_файлу/скриншот_create_task.png)
+![Create Task Page](static/images/createtaskpage.png)
 
 ---
 
