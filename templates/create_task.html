@@ -15,7 +15,7 @@
             background-size: cover;
             background-position: center;
             font-family: 'Century Gothic', sans-serif;
-            color: #800020;
+            color: #3C3C3C;
             margin: 0;
             padding: 0;
             height: 110vh;
@@ -41,10 +41,10 @@
         }
 
         .form-container {
-            background-color: rgba(255, 255, 255, 0.0);
+            background-color: rgba(255, 255, 255, 0.5);
             border-radius: 15px;
             padding: 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.9);
             width: 100%;
             backdrop-filter: blur(10px);
         }
@@ -56,7 +56,7 @@
             width: 100%;
             padding: 12px;
             margin-bottom: 15px;
-            border: 2px solid #800020;
+            border: 2px solid #3C3C3C;
             border-radius: 10px;
             font-family: 'Century Gothic', sans-serif;
             font-size: 16px;
@@ -68,7 +68,7 @@
         }
 
         .button {
-            background-color: #800020;
+            background-color: #3C3C3C;
             color: lightgray;
             padding: 12px 20px;
             border: none;
@@ -82,11 +82,11 @@
         }
 
         .button:hover {
-            background-color: #66001A;
+            background-color: #1C1C1C;
         }
 
         .file-upload-button {
-            background-color: #800020;
+            background-color: #3C3C3C;
             color: lightgray;
             padding: 15px;
             border: none;
@@ -101,7 +101,7 @@
         }
 
         .file-upload-button:hover {
-            background-color: #66001A;
+            background-color: #1C1C1C;
         }
 
         .file-list {
@@ -111,19 +111,19 @@
         }
 
         .file-list li {
-            color: #800020;
+            color: #3C3C3C;
             font-family: 'Century Gothic', sans-serif;
             margin-bottom: 5px;
         }
 
         .file-list a {
-            color: #800020;
+            color: #3C3C3C;
             text-decoration: underline;
             display: inline-block;
         }
 
         .file-list a:hover {
-            color: #66001A;
+            color: #1C1C1C;
         }
 
         .flash {
@@ -133,7 +133,7 @@
         }
 
         a {
-            background-color: #800020;
+            background-color: #3C3C3C;
             color: lightgray;
             padding: 10px 15px;
             border: none;
@@ -151,7 +151,7 @@
         }
 
         a:hover {
-            background-color: #66001A;
+            background-color: #1C1C1C;
             text-decoration: underline;
         }
     </style>
@@ -167,18 +167,18 @@
 
                 <select name="priority" id="priority" required>
                     <option value="">Выберите приоритет</option>
-                    <option value="Низкий">Низкий</option>
-                    <option value="Средний">Средний</option>
-                    <option value="Высокий">Высокий</option>
+                    <option value="Низкий">Низкий приоритет (не срочный)</option>
+                    <option value="Средний">Средний приоритет (важный)</option>
+                    <option value="Высокий">Высокий приоритет (критический)</option>
                 </select>
 
                 <input type="date" name="due_date" required>
 
                 <select name="difficulty" id="difficulty" required>
                     <option value="">Выберите сложность</option>
-                    <option value="1">Легко</option>
-                    <option value="2">Средне</option>
-                    <option value="3">Сложно</option>
+                    <option value="1">Краткосрочные (до 2 часов)</option>
+                    <option value="2">Среднесрочные (от 2 до 8 часов)</option>
+                    <option value="3">Долгосрочные (более 8 часов)</option>
                 </select>
 
                 <select name="status" id="status" required>
