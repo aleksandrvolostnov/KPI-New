@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
 
+<<<<<<< HEAD
     <!-- Подключаем Flatpickr -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -280,12 +281,182 @@
 
     </style>
 </head>
+=======
+    <style>
+    body {
+        background-image: url('{{ url_for('static', filename='images/tasks.jpg') }}');
+        background-size: cover;
+        background-position: center;
+        font-family: 'Century Gothic', sans-serif;
+        color: #3C3C3C;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .container {
+        background-color: rgba(255, 255, 255, 0.4);
+        border-radius: 30px;
+        padding: 30px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        width: 100%;
+        max-width: 1000px;
+        text-align: center;
+        backdrop-filter: blur(10px);
+    }
+
+    h1, h2 {
+        color: #3C3C3C;
+        font-family: 'Century Gothic', sans-serif;
+        font-weight: normal;
+    }
+
+    p {
+        font-size: 1.1em;
+        line-height: 1.8;
+        color: #333;
+        margin-bottom: 20px;
+        font-family: 'Century Gothic', sans-serif;
+        font-weight: normal;
+    }
+
+    /* Стандартная кнопка */
+    .button {
+        background-color: #3C3C3C;
+        color: lightgray;
+        padding: 12px;
+        border: none;
+        border-radius: 20px;
+        font-size: 1em;
+        font-family: 'Century Gothic', sans-serif;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        width: 200px;
+        margin: 15px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Кнопка для скачивания отчета - синий цвет */
+    .button.report {
+        background-color: #3C3C3C; /* Синий */
+    }
+
+    .button.report:hover {
+        background-color: #1C1C1C; /* Более темный синий */
+        transform: translateY(-5px);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Кнопка для скачивания диаграммы - бордовый цвет */
+    .button.chart {
+        margin-top: 100px;
+        background-color: #3C3C3C; /* Бордовый */
+    }
+
+    .button.chart:hover {
+        background-color: #3C3C3C; /* Более темный бордовый */
+        transform: translateY(-5px);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .flash {
+        color: red;
+        margin-bottom: 15px;
+        text-align: center;
+        font-family: 'Century Gothic', sans-serif;
+    }
+
+    .period-form {
+        margin-bottom: 20px;
+        text-align: left;
+    }
+
+    .period-form label {
+        font-size: 1.2em;
+        color: #333;
+        font-family: 'Century Gothic', sans-serif;
+    }
+
+    .period-form input,
+    .choices__inner {
+        width: 100%;
+        padding: 13px;
+        color: black;
+        border-radius: 10px;
+        border: 2px solid #3C3C3C;
+        margin-bottom: 15px;
+        font-size: 1em;
+        font-family: 'Century Gothic', sans-serif;
+        box-sizing: border-box;
+    }
+
+    /* Контейнер для информации о KPI */
+    .info-container {
+        margin-bottom: 30px;
+    }
+
+    /* Контейнеры с отчетами рядом */
+    .reports-container {
+        display: flex;
+        justify-content: space-between;
+        font-weight: normal;
+        gap: 20px; /* Расстояние между контейнерами */
+        margin-top: 20px;
+    }
+
+    /* Стиль для каждого контейнера с отчетами */
+    .report-section {
+        background-color: rgba(255, 255, 255, 0.7);
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        width: 48%; /* Контейнеры занимают 48% ширины */
+        text-align: center;
+        font-weight: normal;
+    }
+
+    .report-section h3 {
+        margin-bottom: 15px;
+        font-size: 1.5em;
+        color: #3C3C3C;
+        font-weight: normal;
+    }
+
+    .report-section p {
+        font-size: 1.2em;
+        color: #333;
+        font-weight: normal;
+    }
+
+    /* Кнопки скачивания по центру контейнера */
+    .download-buttons {
+        display: flex;
+        justify-content: center; /* Выравниваем по центру */
+        gap: 10px; /* Добавляем промежуток между кнопками */
+    }
+
+    /* Кнопка меню в правом верхнем углу */
+    footer {
+        position: fixed;
+        top: 60px;
+        right: 20px;
+    }
+    .info-container p strong {
+        font-weight: normal; /* Жирное начертание */
+        font-size: 1.2em;
+    }
+</style>
+
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
 <body>
     <div class="container">
         <header>
             <h1>Отчеты</h1>
         </header>
 
+<<<<<<< HEAD
         <section class="info-container">
             <h2>Коэффициент Продуктивности (KPI)</h2>
             <div class="kpi-charts">
@@ -313,17 +484,49 @@
                     {% if current_user.role.role_name == 'Admin' %}
                     <label for="user_id">Выберите сотрудника:</label>
                     <select name="user_id" id="user_id" required>
+=======
+        <!-- Контейнер с общей информацией -->
+        <section class="info-container">
+            <h2>Коэффициент Продуктивности (KPI)</h2>
+            <p><strong>Ваш личный KPI за весь период: {{ user_kpi | round(1) }}%</strong></p>
+            <p><strong>Общий KPI предприятия: {{ company_kpi | round(1) }}%</strong></p>
+        </section>
+
+        <!-- Контейнер для скачивания отчетов -->
+        <section class="reports-container">
+            <!-- Раздел для скачивания личного отчета -->
+            <div class="report-section">
+                <h3>Отчет сотрудника</h3>
+
+                <form method="POST" action="{{ url_for('download_report') }}" class="period-form">
+                    <label for="start_date">Дата начала:</label>
+                    <input type="date" name="start_date" id="start_date" required>
+
+                    <label for="end_date">Дата окончания:</label>
+                    <input type="date" name="end_date" id="end_date" required>
+
+                    {% if current_user.role.role_name == 'Admin' %}
+                    <label for="user_id">Выберите сотрудника:</label>
+                    <select name="user_id" id="user_id">
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
                         {% for user in users %}
                         <option value="{{ user.id }}">{{ user.username }}</option>
                         {% endfor %}
                     </select>
                     {% endif %}
+<<<<<<< HEAD
                     <div class="download-buttons">
                         <button type="submit" class="download-button">Скачать отчет</button>
+=======
+
+                    <div class="download-buttons">
+                        <button type="submit" class="button report">Скачать отчет</button>
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
                     </div>
                 </form>
             </div>
 
+<<<<<<< HEAD
             <div class="report-section">
                 <h3>Сравнительная диаграмма эффективности</h3>
                 <form method="POST" action="{{ url_for('download_all_kpis') }}" class="period-form">
@@ -333,10 +536,26 @@
                     <input type="text" name="end_date" id="end_date_chart" placeholder="Выберите дату" required>
                     <div class="download-buttons">
                         <button type="submit" class="button download-chart-btn">Скачать диаграмму</button>
+=======
+            <!-- Раздел для скачивания общего отчета -->
+            <div class="report-section">
+                <h3>Сравнительная диаграмма эффективности</h3>
+
+                <form method="POST" action="{{ url_for('download_all_kpis') }}" class="period-form">
+                    <label for="start_date">Дата начала:</label>
+                    <input type="date" name="start_date" id="start_date" required>
+
+                    <label for="end_date">Дата окончания:</label>
+                    <input type="date" name="end_date" id="end_date" required>
+
+                    <div class="download-buttons">
+                        <button type="submit" class="button chart">Скачать диаграмму</button>
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
                     </div>
                 </form>
             </div>
         </section>
+<<<<<<< HEAD
     </div>
 
     <footer>
@@ -388,5 +607,24 @@
     });
 </script>
 
+=======
+
+        <footer>
+            <a href="{{ url_for('dashboard') }}" class="button">Меню</a>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const elements = document.querySelectorAll('select');
+            elements.forEach(function (element) {
+                new Choices(element, {
+                    searchEnabled: false,
+                    itemSelectText: '',
+                });
+            });
+        });
+    </script>
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
 </body>
 </html>

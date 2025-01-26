@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Регистрация</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+<<<<<<< HEAD
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
     <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
@@ -57,13 +58,75 @@
         input[type="password"]:focus {
             border-color: #A4161A;
             box-shadow: 0 0 10px rgba(164, 22, 26, 0.8);
+=======
+    <style>
+        body {
+            background-image: url('static/images/fon.jpg');
+            background-size: cover;
+            background-position: center;
+            font-family: 'Century Gothic', Arial, sans-serif;
+            color: #3C3C3C;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.6);
+            padding: 30px 40px;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            color: #3C3C3C;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Поля одинакового размера */
+        input[type="text"],
+        input[type="password"],
+        select {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 2px solid #3C3C3C;
+            border-radius: 30px;
+            background-color: rgba(255, 255, 255, 0.9);
+            font-size: 16px;
+            font-family: 'Century Gothic', sans-serif;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            box-sizing: border-box; /* Учитываем padding при расчете ширины */
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus,
+        select:focus {
+            border-color: #3C3C3C;
+            box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.2);
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             outline: none;
         }
 
         button {
+<<<<<<< HEAD
             background-color: #A4161A;
             color: #D3D3D3;
             font-family: 'Century Gothic', sans-serif;
+=======
+            background-color: #3C3C3C;
+            color: lightgray;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             padding: 15px;
             border: none;
             border-radius: 30px;
@@ -71,6 +134,7 @@
             font-size: 1.1em;
             width: 100%;
             transition: transform 0.3s ease, background-color 0.3s ease;
+<<<<<<< HEAD
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         }
 
@@ -78,21 +142,47 @@
             background-color: #801313;
             transform: translateY(-5px);
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+=======
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            box-sizing: border-box; /* Учитываем padding при расчете ширины */
+        }
+
+        button:hover {
+            background-color: #3C3C3C;
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .flash {
+            color: red;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
         }
 
         footer {
             margin-top: 20px;
+<<<<<<< HEAD
             font-size: 1em;
         }
 
         footer a {
             color: #A4161A;
             text-decoration: none;
+=======
+        }
+
+        footer a {
+            color: #3C3C3C;
+            text-decoration: none;
+            font-size: 1em;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
         }
 
         footer a:hover {
             text-decoration: underline;
         }
+<<<<<<< HEAD
 
         .choices {
             width: 100%;
@@ -164,6 +254,8 @@
         .choices__item span {
             text-align: left;
         }
+=======
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
     </style>
 </head>
 <body>
@@ -176,18 +268,26 @@
             <input type="text" name="username" placeholder="Имя пользователя" required>
             <input type="password" name="password" placeholder="Пароль" required>
             <input type="password" name="confirm_password" placeholder="Подтверждение пароля" required>
+<<<<<<< HEAD
 
             <!-- Выбор роли с использованием Choices.js -->
             <select name="role_id" id="role-select" required>
+=======
+            <select name="role_id" required>
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
                 <option value="" disabled selected>Выберите роль</option>
                 <option value="1">Администратор</option>
                 <option value="2">Пользователь</option>
             </select>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             <button type="submit">Зарегистрироваться</button>
         </form>
 
         <footer>
+<<<<<<< HEAD
             <p>Уже есть аккаунт? <a href="{{ url_for('login') }}">Войдите здесь</a></p>
         </footer>
     </div>
@@ -204,5 +304,10 @@
             });
         });
     </script>
+=======
+            <p>Уже есть аккаунт? <a href="{{ url_for('login') }}">Войдите здесь</a>.</p>
+        </footer>
+    </div>
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
 </body>
 </html>

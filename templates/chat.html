@@ -7,11 +7,19 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <style>
         body {
+<<<<<<< HEAD
             background-color: #161A1D;
             color: #D3D3D3;
             background-size: cover;
             background-position: center;
             font-family: 'Century Gothic', sans-serif;
+=======
+            background-image: url('{{ url_for('static', filename='images/tasks.jpg') }}');
+            background-size: cover;
+            background-position: center;
+            font-family: 'Century Gothic', sans-serif;
+            color: lightgray;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             margin: 0;
             padding: 0;
             height: 100vh;
@@ -36,8 +44,13 @@
             position: absolute;
             top: 20px;
             left: 20px;
+<<<<<<< HEAD
             background-color: #2A2F34;
             color: #d3d3d3;
+=======
+            background-color: whitesmoke;
+            color: #3C3C3C;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             padding: 10px 20px;
             border: none;
             border-radius: 10px;
@@ -49,8 +62,13 @@
         }
 
         .menu-button:hover {
+<<<<<<< HEAD
             background-color: #161A1D;
             color: #d3d3d3;
+=======
+            background-color: #3C3C3C;
+            color: lightgray;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
         }
 
         .user-list {
@@ -63,7 +81,11 @@
         }
 
         h2 {
+<<<<<<< HEAD
             color: #A4161A;
+=======
+            color: #3C3C3C;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             font-weight: normal;
             font-size: 1.6em;
         }
@@ -71,7 +93,11 @@
         .user {
             padding: 10px;
             border-radius: 10px;
+<<<<<<< HEAD
             background-color: #2A2F34;
+=======
+            background-color: #3C3C3C;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             margin-bottom: 10px;
             cursor: pointer;
             display: flex;
@@ -87,7 +113,11 @@
         .notification-dot {
             height: 10px;
             width: 10px;
+<<<<<<< HEAD
             background-color: #A4161A;
+=======
+            background-color: #66001A;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             border-radius: 50%;
             display: inline-block;
             margin-left: 10px;
@@ -119,8 +149,13 @@
 
         .message.sent {
             align-self: flex-end;
+<<<<<<< HEAD
             background-color: gray;
             color: #d3d3d3;
+=======
+            background-color: grey;
+            color: lightgray;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
         }
 
         .message.sent .action-button {
@@ -130,6 +165,7 @@
 
         .message.received {
             align-self: flex-start;
+<<<<<<< HEAD
             background-color: #2A2F34;
             color: #d3d3d3;
         }
@@ -137,17 +173,34 @@
         .message.received .action-button {
             background-color: #A4161A;
             color: #d3d3d3;
+=======
+            background-color: #3C3C3C;
+            color: lightgray;
+        }
+
+        .message.received .action-button {
+            background-color: grey;
+            color: lightgray;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
         }
 
         .message-info {
             font-size: 12px;
+<<<<<<< HEAD
             color: #d3d3d3;
+=======
+            color: lightgray;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             margin-bottom: 5px;
         }
 
         .message-parent {
             font-size: 12px;
+<<<<<<< HEAD
             color: #161A1D;
+=======
+            color: lightgray;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             margin-bottom: 5px;
         }
 
@@ -160,9 +213,13 @@
         input[type="text"] {
             flex-grow: 1;
             padding: 10px;
+<<<<<<< HEAD
             border: 2px solid #161A1D;
             background-color: #2A2F34;
             color: #d3d3d3;
+=======
+            border: 2px solid #3C3C3C;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             border-radius: 10px;
             font-family: 'Century Gothic', sans-serif;
             font-size: 16px;
@@ -177,6 +234,7 @@
         }
 
         .send-button {
+<<<<<<< HEAD
             background-color: transparent; /* Убираем фон */
             color: #A4161A; /* Цвет смайлика */
             padding: 0; /* Убираем отступы */
@@ -192,6 +250,23 @@
         }
 
 
+=======
+            background-color: #3C3C3C;
+            color: lightgray;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Century Gothic', sans-serif;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .send-button:hover {
+            background-color: #1C1C1C;
+        }
+
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
         input[type="file"] {
             display: none;
         }
@@ -199,13 +274,21 @@
         .file-label {
             font-size: 24px;
             cursor: pointer;
+<<<<<<< HEAD
             color: #2A2F34;
+=======
+            color: #3C3C3C;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             background-color: transparent;
             border: none;
         }
 
         .file-label:hover {
+<<<<<<< HEAD
             color: #161A1D;
+=======
+            color: #1C1C1C;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
         }
 
         .message-actions {
@@ -215,9 +298,15 @@
         }
 
         .action-button {
+<<<<<<< HEAD
             background-color: #A4161A;
             border: none;
             color: #2A2F34;
+=======
+            background: linear-gradient(145deg, grey, #666666);
+            border: none;
+            color: lightgray;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             padding: 8px 15px;
             border-radius: 20px;
             cursor: pointer;
@@ -228,17 +317,29 @@
         }
 
         .action-button:hover {
+<<<<<<< HEAD
             background-color: #A4161A;
+=======
+            background: linear-gradient(145deg, #a6a6a6, #4d4d4d);
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
             transform: translateY(-2px);
         }
 
         .message.sent .action-button {
+<<<<<<< HEAD
             background: #A4161A;
         }
 
         .message.sent .action-button:hover {
             background: #A4161A;
+=======
+            background: linear-gradient(145deg, #3C3C3C, #1C1C1C);
+        }
+
+        .message.sent .action-button:hover {
+            background: linear-gradient(145deg, #3C3C3C, #1C1C1C);
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
             transform: translateY(-2px);
         }
@@ -249,7 +350,11 @@
         }
 
         a {
+<<<<<<< HEAD
             color: #d3d3d3;
+=======
+            color: lightgray;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             text-decoration: none;
         }
 
@@ -259,7 +364,11 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
+<<<<<<< HEAD
             background-color: #A4161A;
+=======
+            background-color: #800020;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             color: lightgray;
             padding: 15px;
             border-radius: 10px;
@@ -268,19 +377,31 @@
         }
         .user-avatar-link {
             margin-right: 10px;
+<<<<<<< HEAD
             color: #D3D3D3;
+=======
+            color: lightgray;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             font-size: 30px;
             text-decoration: none;
         }
 
         .user-avatar-link:hover {
+<<<<<<< HEAD
             color: #D3D3D3;
+=======
+            color: #ccc;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
         }
 
         .user-avatar-icon {
             font-size: 20px;
             margin-right: 10px;
+<<<<<<< HEAD
             color: #D3D3D3;
+=======
+            color: lightgray;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
         }
 
         .user {
@@ -290,6 +411,7 @@
             cursor: pointer;
             padding: 10px;
             border-radius: 10px;
+<<<<<<< HEAD
             background-color: #2A2F34;
             margin-bottom: 10px;
             transition: background-color 0.3s ease;
@@ -309,6 +431,17 @@
     .file-label:hover {
         color: #F9D8B1; /* Цвет при наведении */
     }
+=======
+            background-color: #3C3C3C;
+            margin-bottom: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .user:hover {
+            background-color: #1C1C1C;
+        }
+
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
     </style>
 </head>
 <body>
@@ -348,7 +481,11 @@
 
         <!-- Окно чата -->
         <div class="chat-window">
+<<<<<<< HEAD
             <h2>{{ chat_with }}</h2>
+=======
+            <h2>Чат с {{ chat_with }}</h2>
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             <div class="messages" id="messages">
                 {% for message in messages %}
                 <div class="message {% if message.sender_id == current_user.id %}sent{% else %}received{% endif %}" id="message-{{ message.id }}">
@@ -375,7 +512,11 @@
                 <input type="text" id="message-input" placeholder="Введите сообщение..." required>
                 <label for="file-input" class="file-label"> 📎 </label>
                 <input type="file" id="file-input" name="file">
+<<<<<<< HEAD
                 <button class="send-button" onclick="sendMessage()">➤</button>
+=======
+                <button class="send-button" onclick="sendMessage()">Отправить</button>
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             </div>
         </div>
     </div>

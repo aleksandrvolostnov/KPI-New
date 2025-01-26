@@ -9,12 +9,22 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
+<<<<<<< HEAD
             background-color: #161A1D;
             color: #D3D3D3;
             background-position: center;
             font-family: 'Century Gothic', sans-serif;
             margin-bottom: 10px;
             padding: 0;
+=======
+            background-image: url('static/images/fon.jpg');
+            background-size: cover;
+            background-position: center;
+            font-family: 'Century Gothic', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #3C3C3C;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             height: 100%;
             display: flex;
             flex-direction: column;
@@ -29,11 +39,16 @@
         }
 
         .dashboard-header h1 {
+<<<<<<< HEAD
             color: #D3D3D3;
+=======
+            color: #3C3C3C;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             font-size: 2em;
             font-family: 'Century Gothic', sans-serif; /* Применяем шрифт Century Gothic */
             font-weight: normal;
             margin: 0;
+<<<<<<< HEAD
             margin-left: -30px;
             margin-top: -25px;
         }
@@ -41,23 +56,38 @@
         .logout-button {
             background-color: #d3d3d3;
             color: #161A1D;
+=======
+        }
+
+        .logout-button {
+            background-color: #3C3C3C;
+            color: lightgray;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             padding: 12px 20px;
             border-radius: 15px;
             font-size: 1em;
             text-decoration: none;
+<<<<<<< HEAD
             margin-top: -10px;
+=======
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             transition: background-color 0.3s, transform 0.3s;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
 
         .logout-button:hover {
+<<<<<<< HEAD
             background-color: #A4161A;
             color: #d3d3d3;
+=======
+            background-color: #1C1C1C;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             transform: translateY(-5px);
         }
 
         .menu-icon {
             font-size: 2em;
+<<<<<<< HEAD
             color: #D3D3D3;
             cursor: pointer;
             position: absolute;
@@ -133,16 +163,67 @@
             flex-direction: row;
             gap: 10px;
             justify-content: start; /* Текст и иконка выравниваются по началу */
+=======
+            color: #3C3C3C;
+            cursor: pointer;
+            position: absolute;
+            top: 90px;
+            left: 20px;
+            z-index: 2;
+        }
+
+        .menu-buttons {
+            position: fixed;
+            top: 140px;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: transform 0.6s ease;
+            z-index: 1;
+            display: block; /* Меню по умолчанию открыто */
+            padding: 20px;
+        }
+
+        .menu-buttons.closed {
+            transform: translateX(-100%); /* Скрыть меню */
+        }
+
+        .function-button {
+            background-color: #3C3C3C;
+            color: lightgray;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 0.9em;
+            text-align: center;
+            transition: background-color 0.6s, transform 0.6s;
+            text-decoration: none;
+            width: 180px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px; /* Отступы между кнопками */
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
         }
 
         .function-button i {
             font-size: 1.5em;
+<<<<<<< HEAD
             margin-bottom: 0px;
         }
 
         .function-button:hover {
             background-color: #2A2F34;
 
+=======
+            margin-bottom: 5px;
+        }
+
+        .function-button:hover {
+            background-color: #1C1C1C;
+            transform: translateY(-6px);
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
         }
 
         /* Контент страницы */
@@ -151,14 +232,22 @@
             flex-wrap: wrap;
             gap: 30px;
             padding: 20px;
+<<<<<<< HEAD
             margin-left: 260px; /* Отступ при открытом меню (220px + 20px) */
             transition: margin-left 0.9s ease;
             flex-grow: 1;
             margin-top: 25px;
+=======
+            margin-left: 240px; /* Отступ при открытом меню (220px + 20px) */
+            transition: margin-left 0.5s ease;
+            flex-grow: 1;
+            margin-top: 57px;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             align-items: flex-start;
         }
 
         .dashboard-content.shifted {
+<<<<<<< HEAD
             margin-left: 40px; /* Отступ при закрытом меню */
         }
 
@@ -205,14 +294,45 @@
     background-color: rgba(36, 40, 43, 0.2);
 }
 
+=======
+            margin-left: 20px; /* Отступ при закрытом меню */
+        }
+
+        .task-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            width: 280px;
+            height: 280px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            cursor: pointer;
+            transition: transform 0.5s, box-shadow 0.5s;
+            text-decoration: none;
+            color: #3C3C3C;
+        }
+
+        .task-container:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
 
         .priority-indicator {
             width: 15px;
             height: 15px;
             border-radius: 50%;
             position: absolute;
+<<<<<<< HEAD
             top: 15px;
             right: 15px;
+=======
+            top: 10px;
+            right: 10px;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
         }
 
         .low-priority {
@@ -257,6 +377,7 @@
             display: flex;
             gap: 30px;
             justify-content: flex-start;
+<<<<<<< HEAD
             margin-top: 30px;
             width: 100%;
             transition: margin-left 0.9s ease;
@@ -271,19 +392,43 @@
 
         .analytics {
             background-color: rgba(42, 47, 52, 1);
+=======
+            margin-top: 50px;
+            width: 100%;
+            transition: margin-left 0.5s ease;
+            margin-left: 260px; /* Отступ при открытом меню */
+            align-items: center;
+        }
+        
+
+        .analytics-container.shifted {
+            margin-left: 40px; /* Отступ при закрытом меню */
+        }
+
+        .analytics {
+            background-color: rgba(255, 255, 255, 0.4);
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             border-radius: 15px;
             padding: 20px;
             width: 280px;
             height: 250px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+<<<<<<< HEAD
             transition: transform 0.9s ease;
+=======
+            transition: transform 0.5s ease;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
 
         .analytics h2 {
+<<<<<<< HEAD
             color: #D3D3D3;
+=======
+            color: #3C3C3C;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             font-size: 1.4em;
             margin-bottom: 20px;
             text-align: center;
@@ -311,7 +456,10 @@
             padding: 0;
             display: flex;
             align-items: center;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
         }
 
         .analytics li {
@@ -325,7 +473,11 @@
             font-family: 'Century Gothic', sans-serif; /* Применяем шрифт Century Gothic */
             font-size: 1em;                           /* Размер шрифта */
             margin-bottom: 0px;                       /* Отступ между строками */
+<<<<<<< HEAD
             color: #D3D3D3; /* Цвет текста */
+=======
+            color: #3C3C3C; /* Цвет текста */
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             font-weight: normal;
         }
         .task-details strong {
@@ -342,13 +494,21 @@
             font-family: 'Century Gothic', sans-serif;
             font-size: 1.2em;
             margin-bottom: 5px;
+<<<<<<< HEAD
             color: #D3D3D3;
+=======
+            color: #3C3C3C;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             font-weight: normal;
         }
         /* Убираем ошибку и правильно задаем цвет для иконки */
 .user-avatar-icon {
     font-size: 40px;
+<<<<<<< HEAD
     color: #D3D3D3; /* Цвет иконки по умолчанию */
+=======
+    color: #3C3C3C; /* Цвет иконки по умолчанию */
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
     margin-left: 15px;
     cursor: pointer;
     transition: color 0.3s ease, transform 0.3s ease;
@@ -369,7 +529,11 @@
 </head>
 <body>
     <header class="dashboard-header">
+<<<<<<< HEAD
         <h1>Task<span style="color: #A4161A;">Flow</span></h1>
+=======
+        <h1>Управляй своими задачами и стань эффективнее с Task Tracker</h1>
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
         <a href="{{ url_for('logout') }}" class="logout-button">Выход</a>
     </header>
 
@@ -392,6 +556,7 @@
 
     <div class="menu-buttons" id="menuButtons">
         <a href="{{ url_for('create_task') }}" class="function-button">
+<<<<<<< HEAD
             <i class="fas fa-plus-circle"></i> Создать задачу
         </a>
         <a href="{{ url_for('tasks') }}" class="function-button">
@@ -425,6 +590,27 @@
         </a>
         <a href="{{ url_for('roulette') }}" class="function-button">
             <i class="fas fa-rocket"></i> Рокэтка
+=======
+            <i class="fas fa-plus-circle"></i>Создать задачу
+        </a>
+        <a href="{{ url_for('tasks') }}" class="function-button">
+            <i class="fas fa-tasks"></i>Список задач
+        </a>
+        <a href="{{ url_for('calendar') }}" class="function-button">
+            <i class="fas fa-calendar-alt"></i>Календарь
+        </a>
+        <a href="{{ url_for('chat', user_id=current_user.id) }}" class="function-button">
+            <i class="fas fa-comments"></i>Чат
+        </a>
+        <a href="{{ url_for('reports') }}" class="function-button">
+            <i class="fas fa-chart-line"></i>Отчеты
+        </a>
+        <a href="{{ url_for('gantt') }}" class="function-button">
+            <i class="fas fa-project-diagram"></i>Диаграмма Ганта
+        </a>
+        <a href="{{ url_for('editor_page') }}" class="function-button">
+            <i class="fas fa-file-alt"></i>Onlyoffice
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
         </a>
     </div>
 
@@ -538,8 +724,13 @@
                     data: [{{ easy_count }}, {{ medium_count }}, {{ hard_count }}],
                     backgroundColor: ['#6ABFB1', '#F3A57A', '#F05A4F'],
                     borderWidth: 1,
+<<<<<<< HEAD
                     borderColor: '#2A2F34',
                     hoverBackgroundColor: '#D3D3D3',
+=======
+                    borderColor: '#F9D8B1',
+                    hoverBackgroundColor: '#F9D8B1',
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
                     borderRadius: 5,
                 }]
             },
@@ -570,4 +761,8 @@
         });
     </script>
 </body>
+<<<<<<< HEAD
 </html>
+=======
+</html>
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f

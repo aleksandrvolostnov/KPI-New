@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
 
+<<<<<<< HEAD
     <!-- Подключение CSS для Flatpickr -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
@@ -22,6 +23,15 @@
             background-size: cover;
             background-position: center;
             font-family: 'Century Gothic', sans-serif;
+=======
+    <style>
+        body {
+            background-image: url('{{ url_for('static', filename='images/edit_task.jpg') }}');
+            background-size: cover;
+            background-position: center;
+            font-family: 'Century Gothic', sans-serif;
+            color: #3C3C3C;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
         }
 
         .container {
@@ -41,7 +51,11 @@
         }
 
         .form-container {
+<<<<<<< HEAD
             background-color: rgba(42, 47, 52, 1);
+=======
+            background-color: rgba(255, 255, 255, 0.4);
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             border-radius: 15px;
             padding: 20px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -55,11 +69,18 @@
         .button,
         textarea {
             width: 100%;
+<<<<<<< HEAD
             background-color: rgba(42, 47, 52, 1);
             padding: 15px;
             margin-bottom: 15px;
             color: #d3d3d3;
             border: 2px solid #d3d3d3;
+=======
+            padding: 15px;
+            margin-bottom: 15px;
+            color: black;
+            border: 2px solid #3C3C3C;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             border-radius: 10px;
             font-family: 'Century Gothic', sans-serif;
             font-size: 16px;
@@ -72,6 +93,7 @@
         input[type="date"]:focus,
         .choices__inner:focus,
         textarea:focus {
+<<<<<<< HEAD
             border-color: #d3d3d3;
             box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.2);
             outline: none;
@@ -91,6 +113,16 @@
         .button {
             background-color: #d3d3d3;
             color: #161A1D;
+=======
+            border-color: #3C3C3C;
+            box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.2);
+            outline: none;
+        }
+
+        .button {
+            background-color: #3C3C3C;
+            color: lightgray;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             border: none;
             cursor: pointer;
             font-size: 16px;
@@ -98,8 +130,12 @@
         }
 
         .button:hover {
+<<<<<<< HEAD
             background-color: #161A1D;
             color: #d3d3d3;
+=======
+            background-color: #3C3C3C;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
         }
 
         .flash {
@@ -113,9 +149,16 @@
             color: #3C3C3C;
         }
 
+<<<<<<< HEAD
         .file-upload-button {
             background-color: #d3d3d3;
             color: #161A1D;
+=======
+        /* Кнопка для загрузки файлов */
+        .file-upload-button {
+            background-color: #3C3C3C;
+            color: lightgray;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             padding: 15px;
             border: none;
             border-radius: 10px;
@@ -128,8 +171,12 @@
         }
 
         .file-upload-button:hover {
+<<<<<<< HEAD
             background-color: #161A1D;
             color: #d3d3d3;
+=======
+            background-color: #3C3C3C;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
         }
 
         .file-list {
@@ -139,19 +186,28 @@
         }
 
         .file-list li {
+<<<<<<< HEAD
             color: #d3d3d3;
+=======
+            color: #3C3C3C;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             font-family: 'Century Gothic', sans-serif;
             border: none;
             margin-bottom: 5px;
         }
 
         .file-list a {
+<<<<<<< HEAD
             color: #d3d3d3;
+=======
+            color: #3C3C3C;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             text-decoration: underline;
             display: inline-block;
         }
 
         .file-list a:hover {
+<<<<<<< HEAD
             color: #A4161A;
         }
 
@@ -168,11 +224,27 @@
             color: #161A1D;
         }
 
+=======
+            color: #3C3C3C;
+        }
+
+        .delete-button {
+            color: #3C3C3C;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        .delete-button:hover {
+            color: #3C3C3C;
+            text-decoration: underline;
+        }
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
         .file-list li strong {
             font-family: 'Century Gothic', sans-serif;
             font-size: 1.2em;
             font-weight: normal;
         }
+<<<<<<< HEAD
 
         /* Стилизация календаря Flatpickr */
         .flatpickr-calendar {
@@ -195,6 +267,8 @@
             background-color: #3C3C3C;
             color: white;
         }
+=======
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
     </style>
 </head>
 <body>
@@ -213,8 +287,12 @@
                     <option value="Высокий" {% if task.priority == 'Высокий' %}selected{% endif %}>Высокий приоритет (критический)</option>
                 </select>
 
+<<<<<<< HEAD
                 <!-- Поле с календарем -->
                 <input type="text" id="due_date" name="due_date" placeholder="Выберите дату" value="{{ task.due_date.strftime('%Y-%m-%d') }}" required>
+=======
+                <input type="date" name="due_date" value="{{ task.due_date.strftime('%Y-%m-%d') }}" required>
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
 
                 <select id="difficulty" name="difficulty" required>
                     <option value="">Выберите уровень сложности</option>
@@ -262,14 +340,18 @@
             <form action="{{ url_for('dashboard') }}">
                 <button type="submit" class="button">Меню</button>
             </form>
+<<<<<<< HEAD
             <form method="POST" action="{{ url_for('delete_task', task_id=task.id) }}" onsubmit="return confirm('Вы уверены, что хотите удалить эту задачу?');">
                 <button type="submit" class="button" style="background-color: #d3d3d3; color: #161A1D; font-size: 16px;">Удалить задачу</button>
             </form>
+=======
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+<<<<<<< HEAD
             // Инициализация Flatpickr для поля due_date
             flatpickr("#due_date", {
                 dateFormat: "Y-m-d", // Формат отображаемой даты
@@ -300,11 +382,49 @@
                     li.innerHTML = files[i].name;
                     fileList.appendChild(li);
                 }
+=======
+            const elements = document.querySelectorAll('select');
+            elements.forEach(function (element) {
+                new Choices(element, {
+                    searchEnabled: false,
+                    itemSelectText: '',
+                });
+            });
+        });
+
+        function updateFileList() {
+            const input = document.getElementById('file-upload');
+            const fileList = document.getElementById('file-list');
+            fileList.innerHTML = '';
+
+            for (let i = 0; i < input.files.length; i++) {
+                const file = input.files[i];
+                const listItem = document.createElement('li');
+                listItem.textContent = file.name;
+                fileList.appendChild(listItem);
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             }
         }
 
         function deleteFile(fileId) {
+<<<<<<< HEAD
             // Здесь должен быть код для удаления файла с сервера
+=======
+            if (confirm('Вы уверены, что хотите удалить этот файл?')) {
+                fetch(`/delete_file/${fileId}`, { method: 'POST' })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            window.location.reload();
+                        } else {
+                            alert('Ошибка при удалении файла.');
+                        }
+                    })
+                    .catch(error => {
+                        alert('Ошибка при удалении файла.');
+                    });
+            }
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
         }
     </script>
 </body>

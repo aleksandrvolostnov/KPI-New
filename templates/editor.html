@@ -8,11 +8,20 @@
         /* Стили для body */
         body {
             font-family: 'Century Gothic', sans-serif;
+<<<<<<< HEAD
             background-size: cover; /* Изображение будет растягиваться на весь экран */
             background-position: center; /* Центрирование изображения */
             background-attachment: fixed; /* Фиксация фона при прокрутке */
             background-color: #161A1D;
             color: #D3D3D3;            margin: 0;
+=======
+            background-image: url('static/images/create_task.jpg');
+            background-size: cover; /* Изображение будет растягиваться на весь экран */
+            background-position: center; /* Центрирование изображения */
+            background-attachment: fixed; /* Фиксация фона при прокрутке */
+            color: #3C3C3C;
+            margin: 0;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             padding: 0;
             height: 100vh; /* Занимает всю высоту окна */
         }
@@ -36,7 +45,11 @@
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
+<<<<<<< HEAD
             background-color: rgba(42, 47, 52, 1);
+=======
+            background-color: rgba(255, 255, 255, 0.4); /* Полупрозрачный фон для таблицы */
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             border-radius: 8px; /* Скругление углов */
             font-weight: normal;
         }
@@ -48,6 +61,7 @@
         }
 
         table th {
+<<<<<<< HEAD
             background-color: #d3d3d3;
             color: #161A1D;
             font-weight: normal;
@@ -57,11 +71,24 @@
         table tr:hover {
             background-color: #d3d3d3;
             color: #161A1D;
+=======
+            background-color: #3C3C3C;
+            color: white;
+            font-weight: normal;
+        }
+
+        table tr:hover {
+            background-color: lightgray;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             font-weight: normal;
         }
 
         .button {
+<<<<<<< HEAD
             color: #d3d3d3;
+=======
+            color: #3C3C3C;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             padding: 10px;
             text-decoration: none;
             border-radius: 5px;
@@ -69,6 +96,7 @@
         }
 
         .button:hover {
+<<<<<<< HEAD
             color: #161A1D;
             text-decoration: underline;
         }
@@ -92,13 +120,23 @@
         .dashboard-button:hover {
             background-color: #161A1D;
             transform: translateY(-5px);
+=======
+            color: #1C1C1C;
+            padding: 10px;
+            text-decoration: underline;
+            border-radius: 5px;
+            text-align: center;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
         }
     </style>
 </head>
 <body>
+<<<<<<< HEAD
     <!-- Кнопка "Дэшборд" -->
     <a href="{{ url_for('dashboard') }}" class="dashboard-button">Дэшборд</a>
 
+=======
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
     <div class="container">
         <h1>Список файлов</h1>
         <table>

@@ -8,11 +8,19 @@
         /* Стили для body */
         body {
             font-family: 'Century Gothic', sans-serif;
+<<<<<<< HEAD
             background-size: cover; /* Изображение будет растягиваться на весь экран */
             background-position: center; /* Центрирование изображения */
             background-attachment: fixed; /* Фиксация фона при прокрутке */
             background-color: #161A1D;
             color: #D3D3D3;
+=======
+            background-image: url('{{ url_for('static', filename='images/create_task.jpg') }}'); /* Путь к изображению фона */
+            background-size: cover; /* Изображение будет растягиваться на весь экран */
+            background-position: center; /* Центрирование изображения */
+            background-attachment: fixed; /* Фиксация фона при прокрутке */
+            color: #3C3C3C;
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             margin: 0;
             padding: 0;
             height: 100vh; /* Занимает всю высоту окна */
@@ -30,18 +38,26 @@
         h1 {
             text-align: center;
             margin-bottom: 20px;
+<<<<<<< HEAD
             font-weight: normal;
+=======
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
         }
 
         /* Контейнер для редактора */
         #editor {
             width: 100%; /* Устанавливаем ширину на 100% */
             height: 80vh; /* Устанавливаем высоту контейнера на 80% от высоты окна */
+<<<<<<< HEAD
             background-color: rgba(42, 47, 52, 1);
+=======
+            background-color: rgba(255, 255, 255, 0.6); /* Полупрозрачный фон для контейнера */
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
             border-radius: 20px; /* Закругленные углы с радиусом 20px */
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); /* Тень вокруг контейнера */
             margin: 0 auto;
         }
+<<<<<<< HEAD
 
         /* Стиль для кнопки "Дэшборд" */
         .dashboard-button {
@@ -63,13 +79,18 @@
             background-color: #161A1D;
             transform: translateY(-5px);
         }
+=======
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
     </style>
     <script src="http://127.0.0.1:80/web-apps/apps/api/documents/api.js"></script>
 </head>
 <body>
+<<<<<<< HEAD
     <!-- Кнопка "Дэшборд" -->
     <a href="{{ url_for('editor_page') }}" class="dashboard-button">Назад</a>
 
+=======
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
     <div class="container">
         <h1>Редактирование документа: {{ document_config['document']['title'] }}</h1>
 
@@ -77,6 +98,7 @@
         <div id="editor"></div>
 
         <script>
+<<<<<<< HEAD
             console.log("Документная конфигурация:", {{ document_config | tojson | safe }});
 
             try {
@@ -118,6 +140,53 @@
                 console.error("Ошибка при инициализации редактора:", error);
             }
         </script>
+=======
+    // Логирование и отладка
+    console.log("Документная конфигурация:", {{ document_config | tojson | safe }});
+
+    try {
+        // Инициализация редактора с параметрами
+        var docEditor = new DocsAPI.DocEditor("editor", {
+            "document": {
+                "fileType": "{{ document_config.document.fileType }}",  // Тип файла
+                "key": "{{ document_config.document.key }}",           // Уникальный ключ документа
+                "title": "{{ document_config.document.title }}",       // Заголовок документа
+                "url": "{{ document_config.document.url }}",           // URL файла
+                "permissions": {"edit": true}                           // Права доступа
+            },
+            "editorConfig": {
+                "callbackUrl": "{{ document_config.editorConfig.callbackUrl }}",  // URL для обратного вызова
+                "mode": "edit",  // Режим редактирования
+                "lang": "ru",    // Язык интерфейса
+                "user": {
+                    "id": "{{ document_config.editorConfig.user.id }}",         // Динамический ID пользователя
+                    "name": "{{ document_config.editorConfig.user.name }}"      // Динамическое имя пользователя
+                }
+            },
+            "events": {
+                "onAppReady": function() {
+                    console.log("Приложение готово.");
+                },
+                "onDocumentStateChange": function(event) {
+                    console.log("Состояние документа изменилось:", event);
+                },
+                "onError": function(event) {
+                    console.error("Ошибка в редакторе:", event);
+                    // Логирование подробностей ошибки
+                    if (event && event.data) {
+                        console.error("Подробности ошибки:", event.data);
+                    }
+                }
+            }
+        });
+
+        console.log("Редактор успешно инициализирован:", docEditor);
+    } catch (error) {
+        console.error("Ошибка при инициализации редактора:", error);
+    }
+</script>
+
+>>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
     </div>
 </body>
 </html>
