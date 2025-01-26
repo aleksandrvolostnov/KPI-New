@@ -1968,9 +1968,7 @@ def roulette():
 
     # Возвращаем HTML и баланс жетонов при GET-запросе
     return render_template('roulette.html', tokens=available_tokens, ranges=ranges)
-=======
 
->>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
 
 # Запуск приложения
 if __name__ == '__main__':
