@@ -42,15 +42,11 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(150), unique=True, nullable=True)  # Новое поле для почты
     phone = db.Column(db.String(20), nullable=True)  # Новое поле для телефона
     avatar = db.Column(db.String(255), nullable=True)  # Новое поле для аватарки
-<<<<<<< HEAD
     tokens = db.Column(db.Integer, default=0)  # Поле для жетонов
-=======
->>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
 
     sent_messages = db.relationship('Message', foreign_keys='Message.sender_id', backref='sender_rel', lazy='dynamic')
     received_messages = db.relationship('Message', foreign_keys='Message.receiver_id', backref='receiver_rel', lazy='dynamic')
 
-<<<<<<< HEAD
 class Project(db.Model):
     __tablename__ = 'projects'
     id = db.Column(db.Integer, primary_key=True)
@@ -77,8 +73,6 @@ class Reminder(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
     user = db.relationship('User', backref='reminders')
-=======
->>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
 
 
 class Message(db.Model):
@@ -117,13 +111,10 @@ class Task(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))  # Создатель задачи
     assigned_to_id = db.Column(db.Integer, db.ForeignKey('users.id'))  # Ответственный
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-<<<<<<< HEAD
     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'), nullable=False)
 
     parent_task_id = db.Column(db.Integer, db.ForeignKey('tasks.id'))  # Связь с родительской задачей
     parent_task = db.relationship('Task', remote_side=[id], backref='dependent_tasks')  # Родительская задача
-=======
->>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
 
     user = db.relationship('User', foreign_keys=[user_id], backref='tasks_created')
     assigned_to = db.relationship('User', foreign_keys=[assigned_to_id], backref='tasks_assigned')
@@ -137,14 +128,10 @@ class Task(db.Model):
             'status': self.status,
             'due_date': self.due_date.strftime('%Y-%m-%d'),
             'assigned_to': self.assigned_to.username if self.assigned_to else None,
-<<<<<<< HEAD
             'project': self.project.name if self.project else None,
             'subtasks': [subtask.to_dict() for subtask in self.subtasks],
             'parent_task': self.parent_task.title if self.parent_task else None,
             'dependent_tasks': [task.title for task in self.dependent_tasks]
-=======
-            'subtasks': [subtask.to_dict() for subtask in self.subtasks]
->>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
         }
 
 
@@ -543,7 +530,6 @@ def allowed_file(filename):
 @app.route('/task/new', methods=['GET', 'POST'])
 @login_required
 def create_task():
-<<<<<<< HEAD
     project_id = request.args.get('project_id')  # Проверяем, передан ли ID проекта в запросе
     project = None
 
@@ -555,8 +541,6 @@ def create_task():
             flash('У вас нет доступа для добавления задач.', 'error')
             return redirect(url_for('projects'))
 
-=======
->>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
     if request.method == 'POST':
         # Получение данных из формы
         title = request.form['title']
@@ -568,7 +552,6 @@ def create_task():
         assigned_to_id = request.form.get('assigned_to')
 
         # Создание новой задачи
-<<<<<<< HEAD
         new_task = Task(
             title=title,
             description=description,
@@ -590,21 +573,6 @@ def create_task():
                 filename = secure_filename(file.filename)
                 file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
                 file.save(file_path)
-=======
-        new_task = Task(title=title, description=description, due_date=due_date, difficulty=difficulty,
-                        priority=priority, status=status, user_id=current_user.id, assigned_to_id=assigned_to_id)
-
-        db.session.add(new_task)
-        db.session.commit()
-
-        # Работа с файлами
-        files = request.files.getlist('task_files[]')  # Получаем список файлов
-        for file in files:
-            if file and allowed_file(file.filename):
-                filename = secure_filename(file.filename)  # Безопасное имя файла
-                file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-                file.save(file_path)  # Сохранение файла в папку uploads
->>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
 
                 # Сохранение информации о файле в базе данных
                 new_file = File(filename=filename, task_id=new_task.id)
@@ -613,7 +581,6 @@ def create_task():
         # Подтверждение транзакции
         db.session.commit()
 
-<<<<<<< HEAD
         # Перенаправление в зависимости от контекста
         if project:
             return redirect(url_for('project_detail', project_id=project.id))
@@ -624,13 +591,6 @@ def create_task():
     users = project.members if project else User.query.all()
 
     return render_template('create_task.html', users=users, project=project)
-=======
-        return redirect(url_for('dashboard'))
-
-    # Получение списка пользователей для выбора исполнителя
-    users = User.query.all()
-    return render_template('create_task.html', users=users)
->>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
 
 
 # Удаление задачи
@@ -917,7 +877,6 @@ def reports():
 
 
 def calculate_kpi(tasks):
-<<<<<<< HEAD
     """
     Пересчитанная функция KPI с учётом:
     - сложности
@@ -938,25 +897,12 @@ def calculate_kpi(tasks):
 
     for task in tasks:
         # Определяем вес задачи по сложности и приоритету
-=======
-    """Функция для расчета KPI на основе списка задач"""
-    difficulty_mapping = {'Легко': 1, 'Средне': 2, 'Сложно': 3}
-    priority_mapping = {'Низкий': 0.5, 'Средний': 1, 'Высокий': 1.5}
-    overdue_penalty = 0.5
-
-    total_weighted_value = 0
-    completed_weighted_value = 0
-    overdue_weighted_value = 0
-
-    for task in tasks:
->>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
         task_difficulty = difficulty_mapping.get(task.difficulty, 1)
         task_priority = priority_mapping.get(task.priority, 1)
         weighted_value = task_difficulty * task_priority
 
         total_weighted_value += weighted_value
 
-<<<<<<< HEAD
         # Определяем KPI в зависимости от статуса задачи
         if task.status == 'Completed':
             if task.due_date >= now:  # Завершена вовремя
@@ -974,23 +920,6 @@ def calculate_kpi(tasks):
 
     return round(kpi_score, 2)
 
-=======
-        if task.status == 'Completed':
-            completed_weighted_value += weighted_value
-        elif task.status == 'Просрочено':
-            overdue_weighted_value += weighted_value * overdue_penalty
-
-    # Вместо того, чтобы добавлять штраф, используем это отдельно
-    completed_weighted_value += overdue_weighted_value
-
-    # Измените логику KPI, чтобы избежать деления на 0
-    if total_weighted_value > 0:
-        kpi_score = (completed_weighted_value / total_weighted_value) * 100
-    else:
-        kpi_score = 0
-
-    return kpi_score
->>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
 
 
 @app.route('/download_report', methods=['POST'])
@@ -1016,7 +945,6 @@ def download_report():
     difficulty_mapping = {'Легко': 1, 'Средне': 2, 'Сложно': 3}
     priority_mapping = {'Низкий': 0.5, 'Средний': 1, 'Высокий': 1.5}
     overdue_penalty = 0.5
-<<<<<<< HEAD
     late_completion_penalty = 0.8
 
     total_weighted_value = 0
@@ -1026,13 +954,6 @@ def download_report():
 
     for task in tasks:
         # Определяем вес задачи по сложности и приоритету
-=======
-
-    total_weighted_value = 0
-    completed_weighted_value = 0
-
-    for task in tasks:
->>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
         task_difficulty = difficulty_mapping.get(task.difficulty, 1)
         task_priority = priority_mapping.get(task.priority, 1)
         weighted_value = task_difficulty * task_priority
@@ -1040,7 +961,6 @@ def download_report():
         total_weighted_value += weighted_value
 
         if task.status == 'Completed':
-<<<<<<< HEAD
             if task.due_date >= datetime.utcnow():
                 completed_on_time_value += weighted_value
             else:
@@ -1050,14 +970,6 @@ def download_report():
 
     if total_weighted_value > 0:
         kpi_score = ((completed_on_time_value + completed_late_value) / total_weighted_value) * 100
-=======
-            completed_weighted_value += weighted_value
-        elif task.status == 'Просрочено':
-            completed_weighted_value += weighted_value * overdue_penalty
-
-    if total_weighted_value > 0:
-        kpi_score = (completed_weighted_value / total_weighted_value) * 100
->>>>>>> 4c80bc660c306d2a5b2908cf97d88b29abcddb6f
     else:
         kpi_score = 0
 
@@ -1491,7 +1403,6 @@ def callback():
     app.logger.info(f"Callback received: {data}")
     return jsonify({"error": 0})  # Всегда возвращайте успешный ответ
 
-<<<<<<< HEAD
 @app.route('/reminders', methods=['GET'])
 @login_required
 def view_reminders():
@@ -1968,7 +1879,6 @@ def roulette():
 
     # Возвращаем HTML и баланс жетонов при GET-запросе
     return render_template('roulette.html', tokens=available_tokens, ranges=ranges)
-
 
 # Запуск приложения
 if __name__ == '__main__':
